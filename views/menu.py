@@ -79,6 +79,10 @@ class Menu:
             Manager().delete_contract(contract_id)
         elif choice == "7":
             Manager().get_all_contracts()
+        elif choice == "8":
+            Manager().get_all_events()
+        elif choice == "9":
+            Manager().get_all_customers()      
         elif choice == "0":
             print("Exiting the CRM Application. Goodbye!")
         else:
