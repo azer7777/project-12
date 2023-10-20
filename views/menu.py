@@ -20,7 +20,12 @@ class Menu:
 
                 if role:
                     print(f"Authentication successful. You are logged in as {role}.")
-                    self.display_menu(role)
+                    if role == "management":
+                        self.management_menu(role)
+                    elif role == "sales":
+                        self.sales_menu(role)
+                    else:
+                        self.support_menu(role)
                 else:
                     print("Authentication failed. Invalid username or password.")
             elif choice == "2":
@@ -35,7 +40,7 @@ class Menu:
             else:
                 print("Invalid choice.")
 
-    def display_menu(self, user_role):
+    def management_menu(self, user_role):
         print(f"Menu for {user_role}")
         print("1. Create Customer")
         print("2. Update Customer")
@@ -81,6 +86,11 @@ class Menu:
             print("Exiting the CRM Application. Goodbye!")
         else:
             print("Invalid choice.")
+    
+    def sales_menu(self, user_role):
+        print(f"Menu for {user_role}")
 
+    def support_menu(self, user_role):
+        print(f"Menu for {user_role}")
 
     
