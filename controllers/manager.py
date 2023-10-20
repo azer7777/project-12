@@ -37,10 +37,11 @@ class Manager:
         self.session.commit()
         print("Customer deleted successfully.")
 
-    def create_contract(self, customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status):
+    def create_contract(self, customer_id, customer_information, commercial_contact, total_amount, amount_remaining, creation_date, contract_status):
         contract = Contract(
             customer_id=customer_id,
-            sales_contact=sales_contact,
+            customer_information=customer_information,
+            commercial_contact=commercial_contact,
             total_amount=total_amount,
             amount_remaining=amount_remaining,
             creation_date=creation_date,

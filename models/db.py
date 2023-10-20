@@ -4,6 +4,14 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+    role = Column(String, nullable=False)
+
 class Customer(Base):
     __tablename__ = 'customers'
     id = Column(Integer, primary_key=True)
@@ -45,7 +53,6 @@ class Event(Base):
 
 # Create an SQLite database in memory
 engine = create_engine('sqlite:///crm.db')
-
 # Create the tables in the database
 Base.metadata.create_all(engine)
 
