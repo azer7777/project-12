@@ -1,5 +1,5 @@
 from controllers.manager import Manager
-from controllers.auth import authenticate, register_user, modify_user, delete_user
+from controllers.auth import authenticate, register_user, update_user, delete_user
 from views.entries import Entries
 
 class Menu:
@@ -51,7 +51,7 @@ class Menu:
             elif choice == "2":
                 username = input("Enter a username: ")
                 password = input("Enter a new password: ")
-                result = modify_user(username, password)
+                result = update_user(username, password)
                 print(result)
             elif choice == "3":
                 username = input("Enter a username: ")

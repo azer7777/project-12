@@ -15,7 +15,7 @@ def register_user(username, password, role):
     return "User registered successfully. User can now log in with the new account credentials."
 
 
-def modify_user(username, new_password):
+def update_user(username, new_password):
     user = session.query(User).filter_by(username=username).first()
     if user:
         user.password = new_password
