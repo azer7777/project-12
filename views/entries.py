@@ -53,19 +53,19 @@ class Entries:
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
-    def get_event_update_input():
+    def get_event_update_input(role):
         while True:
             try:
                 event_id = int(input("Enter event ID: "))
-                new_support_contact = input("Enter new support contact (or press Enter to keep current support contact): ")
-                if not new_support_contact:
-                    new_support_contact = None
-                new_location = input("Enter new location (or press Enter to keep current location): ")
-                if not new_location:
-                    new_location = None
-                new_notes = input("Enter new notes (or press Enter to keep current notes): ")
-                if not new_notes:
-                    new_notes = None
+                new_support_contact = None
+                new_location = None
+                new_notes = None
+                if role == "management":
+                    new_support_contact = input("Enter new support contact (or press Enter to keep current support contact): ")
+                if role == "support":
+                    new_location = input("Enter new location (or press Enter to keep current location): ")
+                if role == "support":
+                    new_notes = input("Enter new notes (or press Enter to keep current notes): ")
                 return event_id, new_support_contact, new_location, new_notes
             except ValueError:
                 print("Invalid input. Please enter a valid integer for event ID.")
