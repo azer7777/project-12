@@ -1,3 +1,6 @@
+import datetime
+
+
 class Entries:
     def get_contract_input():
         while True:
@@ -6,7 +9,7 @@ class Entries:
                 sales_contact = input("Enter sales contact: ")
                 total_amount = float(input("Enter total amount: "))
                 amount_remaining = float(input("Enter amount remaining: "))
-                creation_date = input("Enter creation date (YYYY-MM-DD): ")
+                creation_date = Entries.check_date_format()
                 contract_status = input("Enter contract status: ")
                 return customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status
             except ValueError:
@@ -34,8 +37,14 @@ class Entries:
         while True:
             try:
                 contract_id = int(input("Enter contract ID: "))
-                new_status = input("Enter contract new status: ")
-                new_amount_remaining = float(input("Enter amount remaining: "))
+                new_status = input("Enter contract new status (or press Enter to keep current status): ")
+                if not new_status:
+                    new_status = None
+                new_amount_remaining_input = input("Enter amount remaining (or press Enter to keep current amount): ")
+                if new_amount_remaining_input:
+                    new_amount_remaining = float(new_amount_remaining_input)
+                else:
+                    new_amount_remaining = None
                 return contract_id, new_status, new_amount_remaining
             except ValueError:
                 print(
@@ -43,3 +52,35 @@ class Entries:
                 )
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
+
+    def get_event_update_input():
+        while True:
+            try:
+                event_id = int(input("Enter event ID: "))
+                new_support_contact = input("Enter new support contact (or press Enter to keep current support contact): ")
+                if not new_support_contact:
+                    new_support_contact = None
+                new_location = input("Enter new location (or press Enter to keep current location): ")
+                if not new_location:
+                    new_location = None
+                new_notes = input("Enter new notes (or press Enter to keep current notes): ")
+                if not new_notes:
+                    new_notes = None
+                return event_id, new_support_contact, new_location, new_notes
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for event ID.")
+            except Exception as e:
+                print(f"An error occurred: {e}. Please try again.")
+
+    def check_date_format():
+        date = input("Enter creation date (YYYY-MM-DD): ")
+        if date != "":
+            while True:
+                try:
+                    date == (datetime.datetime.strptime(date, "%d/%m/%Y")).date()
+                    break
+                except ValueError:
+                    print("    Inccorect date format !")
+                    print("    Try again")
+                    date = input("Enter creation date (YYYY-MM-DD): ")
+        return date

@@ -73,7 +73,8 @@ class Menu:
             elif choice == "9":
                 Manager().get_events_without_support()
             elif choice == "10":
-                Manager().update_event()
+                event_id, new_support_contact, new_location, new_notes = Entries.get_event_update_input()
+                Manager().update_event(event_id, new_support_contact, new_location, new_notes)
             elif choice == "11":
                 Manager().get_all_customers()      
             elif choice == "0":
