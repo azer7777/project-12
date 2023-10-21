@@ -32,62 +32,63 @@ class Menu:
                 print("Invalid choice.")
 
     def management_menu(self, user_role):
-        print(f"Menu for {user_role}")
-        print("1. Register collaborator")
-        print("2. Update collaborator")
-        print("3. Delete collaborator")
-        print("4. Create Contract")
-        print("5. Update Contract")
-        print("6. Delete Contract")
-        print("7. List All Contracts")
-        print("8. List All Events")
-        print("9. List All Customers")
-        print("0. Logout")
-
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            username = input("Enter a new username: ")
-            password = input("Enter a new password: ")
-            role = input("Enter a role (management, sales, or support): ")
-            result = register_user(username, password, role)
-            print(result)
-        elif choice == "2":
-            username = input("Enter a username: ")
-            password = input("Enter a new password: ")
-            result = modify_user(username, password)
-            print(result)
-        elif choice == "3":
-            username = input("Enter a username: ")
-            result = delete_user(username, password)
-            print(result)            
-        elif choice == "4":
-            customer_id = int(input("Enter customer ID: "))
-            sales_contact = input("Enter sales contact: ")
-            total_amount = float(input("Enter total amount: "))
-            amount_remaining = float(input("Enter amount remaining: "))
-            creation_date = input("Enter creation date (YYYY-MM-DD): ")
-            contract_status = input("Enter contract status: ")
-            Manager().create_contract(customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status)
-        elif choice == "5":
-            contract_id = int(input("Enter contract ID: "))
-            new_status = input("Enter contract new status: ")
-            new_amount_remaining = float(input("Enter amount remaining: "))
-            Manager().update_contract(contract_id, new_status, new_amount_remaining)
-        elif choice == "6":
-            contract_id = int(input("Enter contract ID: "))
-            Manager().delete_contract(contract_id)
-        elif choice == "7":
-            Manager().get_all_contracts()
-        elif choice == "8":
-            Manager().get_all_events()
-        elif choice == "9":
-            Manager().get_all_customers()      
-        elif choice == "0":
-            print("Exiting the CRM Application. Goodbye!")
-        else:
-            print("Invalid choice.")
-    
+        while True:
+            print(f"Menu for {user_role}")
+            choice = input(
+            """
+                1. Register collaborator    2. Update collaborator    3. Delete collaborator
+                4. Create Contract          5. Update Contract        6. Delete Contract
+                7. List All Contracts       8. List All Events        9. List Events Without support
+                10. Update Event            11. List All Customers    0. Logout
+                
+                                             Choose an option :                            """
+            )
+            if choice == "1":
+                username = input("Enter a new username: ")
+                password = input("Enter a new password: ")
+                role = input("Enter a role (management, sales, or support): ")
+                result = register_user(username, password, role)
+                print(result)
+            elif choice == "2":
+                username = input("Enter a username: ")
+                password = input("Enter a new password: ")
+                result = modify_user(username, password)
+                print(result)
+            elif choice == "3":
+                username = input("Enter a username: ")
+                result = delete_user(username, password)
+                print(result)            
+            elif choice == "4":
+                customer_id = int(input("Enter customer ID: "))
+                sales_contact = input("Enter sales contact: ")
+                total_amount = float(input("Enter total amount: "))
+                amount_remaining = float(input("Enter amount remaining: "))
+                creation_date = input("Enter creation date (YYYY-MM-DD): ")
+                contract_status = input("Enter contract status: ")
+                Manager().create_contract(customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status)
+            elif choice == "5":
+                contract_id = int(input("Enter contract ID: "))
+                new_status = input("Enter contract new status: ")
+                new_amount_remaining = float(input("Enter amount remaining: "))
+                Manager().update_contract(contract_id, new_status, new_amount_remaining)
+            elif choice == "6":
+                contract_id = int(input("Enter contract ID: "))
+                Manager().delete_contract(contract_id)
+            elif choice == "7":
+                Manager().get_all_contracts()
+            elif choice == "8":
+                Manager().get_all_events()
+            elif choice == "9":
+                Manager().get_events_without_support()
+            elif choice == "10":
+                Manager().update_event()
+            elif choice == "11":
+                Manager().get_all_customers()      
+            elif choice == "0":
+                print("Exiting the CRM Application. Goodbye!")
+            else:
+                print("Invalid choice.")
+               
     def sales_menu(self, user_role):
         print(f"Menu for {user_role}")
         print("1. Create Customer")

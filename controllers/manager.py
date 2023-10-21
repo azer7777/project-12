@@ -94,6 +94,10 @@ class Manager:
     def get_all_events(self):
         events = self.session.query(Event).all()
         return events
+    
+    def get_events_without_support(self):
+        events = self.session.query(Event).filter(Event.support_contact.is_(None)).all()
+        return events
 
     def delete_event(self, event_id):
         delete_query = text("DELETE FROM events WHERE id=:event_id")
