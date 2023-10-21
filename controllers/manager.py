@@ -22,10 +22,14 @@ class Manager:
         print("Customer created successfully.")
 
     def update_customer(self, customer_id, new_email, new_phone):
-        update_query = text("UPDATE customers SET email=:new_email, phone=:new_phone WHERE id=:customer_id")
-        self.session.execute(update_query, {"new_email": new_email, "new_phone": new_phone, "customer_id": customer_id})
-        self.session.commit()
-        print("Customer updated successfully.")
+        existing_customer = self.session.query(Customer).filter_by(id=customer_id).first()
+        if existing_customer:
+            update_query = text("UPDATE customers SET email=:new_email, phone=:new_phone WHERE id=:customer_id")
+            self.session.execute(update_query, {"new_email": new_email, "new_phone": new_phone, "customer_id": customer_id})
+            self.session.commit()
+            print("Customer updated successfully.")
+        else:
+            print("Customer not found. Update operation aborted.")
 
     def get_all_customers(self):
         customers = self.session.query(Customer).all()
@@ -56,9 +60,21 @@ class Manager:
         self.session.execute(update_query, {"new_status": new_status, "new_amount_remaining": new_amount_remaining, "contract_id": contract_id})
         self.session.commit()
         print("Contract updated successfully.")
+    
+    def update_contract(self, contract_id, new_status, new_amount_remaining):
+        existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()
+        if existing_contract:
+            update_query = text("UPDATE contracts SET contract_status=:new_status, amount_remaining=:new_amount_remaining WHERE id=:contract_id")
+            self.session.execute(update_query, {"new_status": new_status, "new_amount_remaining": new_amount_remaining, "contract_id": contract_id})
+            self.session.commit()
+            print("Contract updated successfully.")
+        else:
+            print("Contract not found. Update operation aborted.")
 
     def get_all_contracts(self):
         contracts = self.session.query(Contract).all()
+        if not contracts:
+            print("No contracts found in the database.")
         return contracts
 
     def delete_contract(self, contract_id):
@@ -86,10 +102,14 @@ class Manager:
         print("Event created successfully.")
 
     def update_event(self, event_id, new_support_contact, new_location, new_notes):
-        update_query = text("UPDATE events SET support_contact=:new_support_contact, location=:new_location, notes=:new_notes WHERE id=:event_id")
-        self.session.execute(update_query, {"new_support_contact": new_support_contact, "new_location": new_location, "new_notes": new_notes, "event_id": event_id})
-        self.session.commit()
-        print("Event updated successfully.")
+        existing_event = self.session.query(Event).filter_by(id=event_id).first()
+        if existing_event:
+            update_query = text("UPDATE events SET support_contact=:new_support_contact, location=:new_location, notes=:new_notes WHERE id=:event_id")
+            self.session.execute(update_query, {"new_support_contact": new_support_contact, "new_location": new_location, "new_notes": new_notes, "event_id": event_id})
+            self.session.commit()
+            print("Event updated successfully.")
+        else:
+            print("Event not found. Update operation aborted.")
 
     def get_all_events(self):
         events = self.session.query(Event).all()

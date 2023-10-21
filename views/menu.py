@@ -41,7 +41,7 @@ class Menu:
                 7. List All Contracts       8. List All Events        9. List Events Without support
                 10. Update Event            11. List All Customers    0. Logout
                 
-                                             Choose an option :                            """
+                                             Choose an option : """
             )
             if choice == "1":
                 username = input("Enter a new username: ")
@@ -85,7 +85,8 @@ class Menu:
             elif choice == "11":
                 Manager().get_all_customers()      
             elif choice == "0":
-                print("Exiting the CRM Application. Goodbye!")
+                print("Logged Out")
+                break
             else:
                 print("Invalid choice.")
                
