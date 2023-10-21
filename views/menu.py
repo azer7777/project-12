@@ -83,8 +83,40 @@ class Menu:
             else:
                 print("Invalid choice.")
                
-    def sales_menu(self, user_role):
-        print(f"Menu for {user_role}")
+    def sales_menu(self, role):
+        while True:
+            print(f"Menu for {role}")
+            choice = input(
+            """
+                1. Create Customer          2. Update Customer        3. Update Contract
+                4. Create Event             5. List All Contracts     6. List not signed or fully paid contracts 
+                7. List All Events          8. List All Customers     0. Logout  
+                
+                                             Choose an option : """
+            )
+            if choice == 1:
+                pass
+            elif choice == 2:
+                pass 
+            elif choice == 3:
+                pass
+            elif choice == 4:
+                pass 
+            elif choice == 5:
+                pass 
+            elif choice == 6:
+                pass 
+            elif choice == 7:
+                pass
+            elif choice == 8:
+                pass                              
+            elif choice == "0":
+                print("Logged Out")
+                break
+            else:
+                print("Invalid choice.")       
+        
+        
         print("1. Create Customer")
         print("2. Update Customer")
         print("3. List All Customers")
@@ -99,8 +131,11 @@ class Menu:
         print("12. Delete Event")
         print("0. Logout")
 
-    def support_menu(self, user_role):
-        print(f"Menu for {user_role}")
+    def support_menu(self, role):
+        while True:
+            print(f"Menu for {role}")
+            
+            
         print("1. Create Customer")
         print("2. Update Customer")
         print("3. List All Customers")
