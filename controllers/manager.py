@@ -36,11 +36,15 @@ class Manager:
         return customers
 
     def delete_customer(self, customer_id):
-        delete_query = text("DELETE FROM customers WHERE id=:customer_id")
-        self.session.execute(delete_query, {"customer_id": customer_id})
-        self.session.commit()
-        print("Customer deleted successfully.")
-
+        existing_customer = self.session.query(Customer).filter_by(id=customer_id).first()
+        if existing_customer:
+            delete_query = text("DELETE FROM customers WHERE id=:customer_id")
+            self.session.execute(delete_query, {"customer_id": customer_id})
+            self.session.commit()
+            print("Customer deleted successfully.")
+        else:
+            print("Customer not found. Delete operation aborted.")
+            
     def create_contract(self, customer_id, customer_information, commercial_contact, total_amount, amount_remaining, creation_date, contract_status):
         contract = Contract(
             customer_id=customer_id,
@@ -78,10 +82,14 @@ class Manager:
         return contracts
 
     def delete_contract(self, contract_id):
-        delete_query = text("DELETE FROM contracts WHERE id=:contract_id")
-        self.session.execute(delete_query, {"contract_id": contract_id})
-        self.session.commit()
-        print("Contract deleted successfully.")
+        existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()
+        if existing_contract:
+            delete_query = text("DELETE FROM contracts WHERE id=:contract_id")
+            self.session.execute(delete_query, {"contract_id": contract_id})
+            self.session.commit()
+            print("Contract deleted successfully.")
+        else:
+            print("Contract not found. Delete operation aborted.")
 
     def create_event(self, event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date,
                      support_contact, location, notes):
@@ -120,7 +128,11 @@ class Manager:
         return events
 
     def delete_event(self, event_id):
-        delete_query = text("DELETE FROM events WHERE id=:event_id")
-        self.session.execute(delete_query, {"event_id": event_id})
-        self.session.commit()
-        print("Event deleted successfully.")
+        existing_event = self.session.query(Event).filter_by(id=event_id).first()
+        if existing_event:
+            delete_query = text("DELETE FROM events WHERE id=:event_id")
+            self.session.execute(delete_query, {"event_id": event_id})
+            self.session.commit()
+            print("Event deleted successfully.")
+        else:
+            print("Event not found. Update operation aborted.")       

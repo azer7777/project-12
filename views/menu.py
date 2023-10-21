@@ -1,5 +1,6 @@
 from controllers.manager import Manager
-from controllers.auth import authenticate, authorize, register_user, modify_user, delete_user
+from controllers.auth import authenticate, register_user, modify_user, delete_user
+from views.entries import Entries
 
 class Menu:
     def __init__(self):
@@ -44,9 +45,7 @@ class Menu:
                                              Choose an option : """
             )
             if choice == "1":
-                username = input("Enter a new username: ")
-                password = input("Enter a new password: ")
-                role = input("Enter a role (management, sales, or support): ")
+                username, password, role = Entries.get_register_input()
                 result = register_user(username, password, role)
                 print(result)
             elif choice == "2":
@@ -59,20 +58,13 @@ class Menu:
                 result = delete_user(username, password)
                 print(result)            
             elif choice == "4":
-                customer_id = int(input("Enter customer ID: "))
-                sales_contact = input("Enter sales contact: ")
-                total_amount = float(input("Enter total amount: "))
-                amount_remaining = float(input("Enter amount remaining: "))
-                creation_date = input("Enter creation date (YYYY-MM-DD): ")
-                contract_status = input("Enter contract status: ")
+                customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status = Entries.get_contract_input()
                 Manager().create_contract(customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status)
             elif choice == "5":
-                contract_id = int(input("Enter contract ID: "))
-                new_status = input("Enter contract new status: ")
-                new_amount_remaining = float(input("Enter amount remaining: "))
+                contract_id, new_status, new_amount_remaining = Entries.get_contract_update_input()
                 Manager().update_contract(contract_id, new_status, new_amount_remaining)
             elif choice == "6":
-                contract_id = int(input("Enter contract ID: "))
+                contract_id = input("Enter contract ID: ")
                 Manager().delete_contract(contract_id)
             elif choice == "7":
                 Manager().get_all_contracts()
