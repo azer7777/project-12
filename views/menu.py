@@ -95,7 +95,8 @@ class Menu:
                                              Choose an option : """
             )
             if choice == 1:
-                pass
+                full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact = Entries.get_customer_input()
+                Manager().create_customer(full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact)
             elif choice == 2:
                 pass 
             elif choice == 3:
@@ -115,25 +116,39 @@ class Menu:
                 break
             else:
                 print("Invalid choice.")       
-        
-        
-        print("1. Create Customer")
-        print("2. Update Customer")
-        print("3. List All Customers")
-        print("4. Delete Customer")
-        print("5. Create Contract")
-        print("6. Update Contract")
-        print("7. List All Contracts")
-        print("8. Delete Contract")
-        print("9. Create Event")
-        print("10. Update Event")
-        print("11. List All Events")
-        print("12. Delete Event")
-        print("0. Logout")
 
     def support_menu(self, role):
         while True:
             print(f"Menu for {role}")
+            choice = input(
+            """
+                1. Create Customer          2. Update Customer        3. Update Contract
+                4. Create Event             5. List All Contracts     6. List not signed or fully paid contracts 
+                7. List All Events          8. List All Customers     0. Logout  
+                
+                                             Choose an option : """
+            )
+            if choice == 1:
+                pass
+            elif choice == 2:
+                pass 
+            elif choice == 3:
+                pass
+            elif choice == 4:
+                pass 
+            elif choice == 5:
+                pass 
+            elif choice == 6:
+                pass 
+            elif choice == 7:
+                pass
+            elif choice == 8:
+                pass                              
+            elif choice == "0":
+                print("Logged Out")
+                break
+            else:
+                print("Invalid choice.")
             
             
         print("1. Create Customer")

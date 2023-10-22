@@ -2,6 +2,21 @@ import datetime
 
 
 class Entries:
+    def get_customer_input():
+        while True:
+            try:
+                full_name = input("Enter full name: ")
+                email = input("Enter email: ")
+                phone = input("Enter phone number: ")
+                company_name = input("Enter company name: ")
+                creation_date = Entries.check_date_format("Enter creation date")
+                last_contact_date = Entries.check_date_format("Enter last contact date")
+                sales_contact = input("Enter sales contact: ")
+                return full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact
+            except Exception as e:
+                print(f"An error occurred: {e}. Please try again.")    
+    
+    
     def get_contract_input():
         while True:
             try:
@@ -9,7 +24,7 @@ class Entries:
                 sales_contact = input("Enter sales contact: ")
                 total_amount = float(input("Enter total amount: "))
                 amount_remaining = float(input("Enter amount remaining: "))
-                creation_date = Entries.check_date_format()
+                creation_date = Entries.check_date_format("Enter creation date")
                 contract_status = input("Enter contract status: ")
                 return customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status
             except ValueError:
@@ -52,6 +67,19 @@ class Entries:
                 )
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
+                
+                
+            event_name = input("Enter event name: ")
+            event_id = int(input("Enter event ID: "))
+            contract_id = int(input("Enter contarct ID: "))
+            client_name = input("Enter client contact: ")
+            client_contact = input("Enter client contact: ")
+            event_start_date = input("Enter event start date: ")
+            event_end_date = input("Enter event end date: ")
+            support_contact = input("Enter support contact: ")
+            location = input("Enter location: ")
+            Attendees = int(input("Enter attendees: "))
+            notes= input("Enter notes: ")
 
     def get_event_update_input(role):
         while True:
@@ -72,8 +100,12 @@ class Entries:
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
-    def check_date_format():
-        date = input("Enter creation date (YYYY-MM-DD): ")
+
+
+
+
+    def check_date_format(message):
+        date = input(f"{message} (YYYY-MM-DD): ")
         if date != "":
             while True:
                 try:
@@ -82,5 +114,5 @@ class Entries:
                 except ValueError:
                     print("    Inccorect date format !")
                     print("    Try again")
-                    date = input("Enter creation date (YYYY-MM-DD): ")
+                    date = input(f"{message} (YYYY-MM-DD): ")
         return date
