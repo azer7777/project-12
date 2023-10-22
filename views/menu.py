@@ -102,7 +102,8 @@ class Menu:
             elif choice == 3:
                 pass
             elif choice == 4:
-                pass 
+                event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
+                Manager().create_event(event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes) 
             elif choice == 5:
                 pass 
             elif choice == 6:

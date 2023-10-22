@@ -67,19 +67,26 @@ class Entries:
                 )
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
-                
-                
-            event_name = input("Enter event name: ")
-            event_id = int(input("Enter event ID: "))
-            contract_id = int(input("Enter contarct ID: "))
-            client_name = input("Enter client contact: ")
-            client_contact = input("Enter client contact: ")
-            event_start_date = input("Enter event start date: ")
-            event_end_date = input("Enter event end date: ")
-            support_contact = input("Enter support contact: ")
-            location = input("Enter location: ")
-            Attendees = int(input("Enter attendees: "))
-            notes= input("Enter notes: ")
+                              
+    def get_event_input():
+        while True:
+            try:
+                event_name = input("Enter event name: ")
+                event_id = int(input("Enter event ID: "))
+                contract_id = int(input("Enter contract ID: "))
+                client_name = input("Enter client name: ")
+                client_contact = input("Enter client contact: ")
+                event_start_date = Entries.check_date_format("Enter event start date")
+                event_end_date = Entries.check_date_format("Enter event end date")
+                support_contact = input("Enter support contact: ")
+                location = input("Enter location: ")
+                attendees = int(input("Enter number of attendees: "))
+                notes = input("Enter notes: ")
+                return event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes
+            except ValueError:
+                print("Invalid input. Please enter valid integers for event ID, contract ID, and number of attendees.")
+            except Exception as e:
+                print(f"An error occurred: {e}. Please try again.")
 
     def get_event_update_input(role):
         while True:
@@ -99,10 +106,6 @@ class Entries:
                 print("Invalid input. Please enter a valid integer for event ID.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
-
-
-
-
 
     def check_date_format(message):
         date = input(f"{message} (YYYY-MM-DD): ")

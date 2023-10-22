@@ -92,7 +92,7 @@ class Manager:
             print("Contract not found. Delete operation aborted.")
 
     def create_event(self, event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date,
-                     support_contact, location, notes):
+                     support_contact, location, attendees, notes):
         event = Event(
             event_name=event_name,
             event_id=event_id,
@@ -103,6 +103,7 @@ class Manager:
             event_end_date=event_end_date,
             support_contact=support_contact,
             location=location,
+            attendees=attendees,
             notes=notes
         )
         self.session.add(event)

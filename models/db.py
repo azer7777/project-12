@@ -48,6 +48,7 @@ class Event(Base):
     event_end_date = Column(Date, nullable=False)
     support_contact = Column(String, nullable=False)
     location = Column(String, nullable=False)
+    attendees = Column(String, nullable=False)
     notes = Column(String)
     contract = relationship('Contract', back_populates='events')
 
