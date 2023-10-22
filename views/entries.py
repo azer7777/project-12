@@ -2,6 +2,20 @@ import datetime
 
 
 class Entries:
+    def get_register_input():
+        while True:
+            try:
+                username = input("Enter a new username: ")
+                password = input("Enter a new password: ")
+                role = input("Enter a role (management, sales, or support): ")
+                if role.lower() not in ["management", "sales", "support"]:
+                    raise ValueError("Invalid role. Please enter management, sales, or support.")
+                return username, password, role.lower()
+            except ValueError as e:
+                print(e)
+            except Exception as e:
+                print(f"An error occurred: {e}. Please try again.")
+    
     def get_customer_input():
         while True:
             try:
@@ -16,7 +30,10 @@ class Entries:
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")    
     
-    
+    customer_id = int(input("Enter customer ID: "))
+    new_email = input("Enter email: ")
+    new_phone = input("Enter new phone: ")
+        
     def get_contract_input():
         while True:
             try:
@@ -31,20 +48,6 @@ class Entries:
                 print(
                     "Invalid input. Please enter a valid number for customer ID, total amount, and amount remaining."
                 )
-            except Exception as e:
-                print(f"An error occurred: {e}. Please try again.")
-
-    def get_register_input():
-        while True:
-            try:
-                username = input("Enter a new username: ")
-                password = input("Enter a new password: ")
-                role = input("Enter a role (management, sales, or support): ")
-                if role.lower() not in ["management", "sales", "support"]:
-                    raise ValueError("Invalid role. Please enter management, sales, or support.")
-                return username, password, role.lower()
-            except ValueError as e:
-                print(e)
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 

@@ -80,6 +80,12 @@ class Manager:
         if not contracts:
             print("No contracts found in the database.")
         return contracts
+    
+    def get_unsigned_or_not_fully_paid_contracts(self):
+        contracts = self.session.query(Contract).filter(
+            (Contract.contract_status != "signed") | (Contract.amount_remaining > 0)
+        ).all()
+        return contracts
 
     def delete_contract(self, contract_id):
         existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()

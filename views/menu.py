@@ -89,7 +89,7 @@ class Menu:
             choice = input(
             """
                 1. Create Customer          2. Update Customer        3. Update Contract
-                4. Create Event             5. List All Contracts     6. List not signed or fully paid contracts 
+                4. Create Event             5. List All Contracts     6. List unsigned or not fully paid contracts 
                 7. List All Events          8. List All Customers     0. Logout  
                 
                                              Choose an option : """
@@ -105,13 +105,13 @@ class Menu:
                 event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
                 Manager().create_event(event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes) 
             elif choice == 5:
-                pass 
+                Manager().get_all_contracts() 
             elif choice == 6:
-                pass 
+                Manager().get_unsigned_or_not_fully_paid_contracts() 
             elif choice == 7:
-                pass
+                Manager().get_all_events()
             elif choice == 8:
-                pass                              
+                Manager().get_all_customers()                              
             elif choice == "0":
                 print("Logged Out")
                 break
