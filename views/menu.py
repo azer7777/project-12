@@ -123,20 +123,20 @@ class Menu:
             print(f"Menu for {role}")
             choice = input(
             """
-                1. Create Customer          2. Update Customer        3. Update Contract
-                4. Create Event             5. List All Contracts     6. List not signed or fully paid contracts 
-                7. List All Events          8. List All Customers     0. Logout  
+                1. Update Event             2. List All Customers      3. List All Contracts
+                4. List All Events          5. List assigned events    0. Logout  
                 
                                              Choose an option : """
             )
             if choice == 1:
-                pass
+                event_id, new_support_contact, new_location, new_notes = Entries.get_event_update_input(role)
+                Manager().update_event(event_id, new_support_contact, new_location, new_notes)
             elif choice == 2:
-                pass 
+                Manager().get_all_customers() 
             elif choice == 3:
-                pass
+                Manager().get_all_contracts()
             elif choice == 4:
-                pass 
+                Manager().get_all_events() 
             elif choice == 5:
                 pass 
             elif choice == 6:
@@ -150,20 +150,6 @@ class Menu:
                 break
             else:
                 print("Invalid choice.")
-            
-            
-        print("1. Create Customer")
-        print("2. Update Customer")
-        print("3. List All Customers")
-        print("4. Delete Customer")
-        print("5. Create Contract")
-        print("6. Update Contract")
-        print("7. List All Contracts")
-        print("8. Delete Contract")
-        print("9. Create Event")
-        print("10. Update Event")
-        print("11. List All Events")
-        print("12. Delete Event")
-        print("0. Logout")
+
 
     
