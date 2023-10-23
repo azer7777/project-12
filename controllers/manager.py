@@ -1,4 +1,5 @@
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import IntegrityError
 from models.db import engine, Customer, Contract, Event
 from sqlalchemy import text
 
@@ -8,18 +9,29 @@ class Manager:
         self.session = Session()
 
     def create_customer(self, full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact):
-        customer = Customer(
-            full_name=full_name,
-            email=email,
-            phone=phone,
-            company_name=company_name,
-            creation_date=creation_date,
-            last_contact_date=last_contact_date,
-            sales_contact=sales_contact
-        )
-        self.session.add(customer)
-        self.session.commit()
-        print("Customer created successfully.")
+        try:
+            existing_customer = self.session.query(Customer).filter_by(email=email).first()
+            if existing_customer:
+                print("Error: The provided email address is already associated with another customer.")
+            else:
+                customer = Customer(
+                    full_name=full_name,
+                    email=email,
+                    phone=phone,
+                    company_name=company_name,
+                    creation_date=creation_date,
+                    last_contact_date=last_contact_date,
+                    sales_contact=sales_contact
+                )
+                self.session.add(customer)
+                self.session.commit()
+                print("Customer created successfully.")
+        except IntegrityError as e:
+            self.session.rollback()
+            print("Error: The provided email address is already associated with another customer.")
+        except Exception as e:
+            self.session.rollback()
+            print(f"An error occurred: {e}")
 
     def update_customer(self, customer_id, new_email, new_phone, user_full_name):
         existing_customer = self.session.query(Customer).filter_by(id=customer_id, sales_contact=user_full_name).first()
@@ -48,17 +60,27 @@ class Manager:
             print("Customer not found. Delete operation aborted.")
             
     def create_contract(self, customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status):
-        contract = Contract(
-            customer_information=customer_id,
-            sales_contact=sales_contact,
-            total_amount=total_amount,
-            amount_remaining=amount_remaining,
-            creation_date=creation_date,
-            contract_status=contract_status
-        )
-        self.session.add(contract)
-        self.session.commit()
-        print("Contract created successfully.")
+        try:
+            customer = self.session.query(Customer).filter_by(id=customer_id).first()
+            if customer:
+                contract = Contract(
+                    customer=customer,
+                    sales_contact=sales_contact,
+                    total_amount=total_amount,
+                    amount_remaining=amount_remaining,
+                    creation_date=creation_date,
+                    contract_status=contract_status
+                )
+                self.session.add(contract)
+                self.session.commit()
+                print("Contract created successfully.")
+            else:
+                print(f"Error: Customer with ID {customer_id} not found.")
+        except ValueError as e:
+            print("Invalid date format. Please use YYYY-MM-DD for the creation date.")
+        except Exception as e:
+            self.session.rollback()
+            print(f"An error occurred: {e}")
     
     def update_contract(self, contract_id, new_status, new_amount_remaining):
         existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()
@@ -106,21 +128,31 @@ class Manager:
 
     def create_event(self, event_name, contract_id, client_name, client_contact, event_start_date, event_end_date,
                      support_contact, location, attendees, notes):
-        event = Event(
-            event_name=event_name,
-            contract_id=contract_id,
-            client_name=client_name,
-            client_contact=client_contact,
-            event_start_date=event_start_date,
-            event_end_date=event_end_date,
-            support_contact=support_contact,
-            location=location,
-            attendees=attendees,
-            notes=notes
-        )
-        self.session.add(event)
-        self.session.commit()
-        print("Event created successfully.")
+        try:
+            contract = self.session.query(Contract).filter_by(id=contract_id).first()
+            if contract:
+                event = Event(
+                    event_name=event_name,
+                    contract_id=contract_id,
+                    client_name=client_name,
+                    client_contact=client_contact,
+                    event_start_date=event_start_date,
+                    event_end_date=event_end_date,
+                    support_contact=support_contact,
+                    location=location,
+                    attendees=attendees,
+                    notes=notes
+                )
+                self.session.add(event)
+                self.session.commit()
+                print("Event created successfully.")
+            else:
+                print(f"Error: Contract with ID {contract_id} not found.")
+        except ValueError as e:
+            print("Invalid date format. Please use YYYY-MM-DD for the creation date.")
+        except Exception as e:
+            self.session.rollback()
+            print(f"An error occurred: {e}")
 
     def update_event(self, event_id, new_support_contact, new_location, new_notes, role, user_full_name):
         if role == "management":

@@ -130,10 +130,10 @@ class Entries:
                 print(f"An error occurred: {e}. Please try again.")
 
     def check_date_format(message):
-        date = input(f"{message} (DD-MM-YYYY): ")
+        date = input(f"{message} (YYYY-MM-DD): ")
         while True:
             try:
-                date == (datetime.strptime(date, "%d/%m/%Y")).date()
+                date == (datetime.strptime(date, "%Y-%m-%d")).date()
                 break
             except ValueError:
                 print("    Inccorect date format !")
