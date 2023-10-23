@@ -5,7 +5,7 @@ class Entries:
     def get_register_input():
         while True:
             try:
-                full_name = input("Enter a full name")
+                full_name = input("Enter a full name: ")
                 username = input("Enter a username: ")
                 password = input("Enter a password: ")
                 role = input("Enter a role (management, sales, or support): ")

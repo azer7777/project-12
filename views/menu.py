@@ -54,7 +54,7 @@ class Menu:
                 print(result)
             elif choice == "3":
                 username = input("Enter a username: ")
-                result = delete_user(username, password)
+                result = delete_user(username)
                 print(result)            
             elif choice == "4":
                 customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status = Entries.get_contract_input()

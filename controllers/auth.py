@@ -12,7 +12,7 @@ def register_user(full_name, username, password, role):
     new_user = User(full_name=full_name, username=username, password=password, role=role)
     session.add(new_user)
     session.commit()
-    return "User registered successfully. User can now log in with the new account credentials."
+    return "User registered successfully. the new user can now log in with the credentials."
 
 
 def update_user(username, new_full_name, new_password):
@@ -46,3 +46,4 @@ def authenticate(username, password):
 
 def authorize(role, allowed_roles):
     return role in allowed_roles
+
