@@ -40,7 +40,7 @@ def authenticate(username, password):
     user = session.query(User).filter_by(username=username, password=password).first()
     if user:
         return user.full_name, user.role
-    return None
+    return None, None
 
 
 
