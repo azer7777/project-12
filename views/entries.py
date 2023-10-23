@@ -16,6 +16,16 @@ class Entries:
                 print(e)
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
+                
+    def get_user_update_input():
+        while True:
+            try:
+                username = input("Enter a username: ")
+                full_name = input("Enter a new full name: ")
+                password = input("Enter a new password: ")
+                return username, full_name, password
+            except Exception as e:
+                print(f"An error occurred: {e}. Please try again.")
     
     def get_customer_input():
         while True:
@@ -31,9 +41,18 @@ class Entries:
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")    
     
-    customer_id = int(input("Enter customer ID: "))
-    new_email = input("Enter email: ")
-    new_phone = input("Enter new phone: ")
+    def get_customer_update_input():
+        while True:
+            try:
+                customer_id = int(input("Enter customer ID: "))
+                new_email = input("Enter new email: ")
+                new_phone = input("Enter new phone: ")
+                return customer_id, new_email, new_phone
+    
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for customer ID.")
+            except Exception as e:
+                print(f"An error occurred: {e}. Please try again.")
         
     def get_contract_input():
         while True:

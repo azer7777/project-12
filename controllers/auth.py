@@ -15,11 +15,11 @@ def register_user(full_name, username, password, role):
     return "User registered successfully. User can now log in with the new account credentials."
 
 
-def update_user(new_full_name, username, new_password):
+def update_user(username, new_full_name, new_password):
     user = session.query(User).filter_by(username=username).first()
     if user:
-        user.password = new_password
         user.full_name = new_full_name
+        user.password = new_password      
         session.commit()
         return "User updated successfully."
     return "User not found."
@@ -32,14 +32,14 @@ def delete_user(username):
         session.commit()
         return "User deleted successfully."
     else:
-        return "User not found."
+        return "User not found. Delete operation aborted."
 
 
 
 def authenticate(username, password):
     user = session.query(User).filter_by(username=username, password=password).first()
     if user:
-        return user.role
+        return user.full_name, user.role
     return None
 
 
