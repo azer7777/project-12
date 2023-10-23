@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 
 class Entries:
@@ -130,14 +130,13 @@ class Entries:
                 print(f"An error occurred: {e}. Please try again.")
 
     def check_date_format(message):
-        date = input(f"{message} (YYYY-MM-DD): ")
-        if date != "":
-            while True:
-                try:
-                    date == (datetime.datetime.strptime(date, "%d/%m/%Y")).date()
-                    break
-                except ValueError:
-                    print("    Inccorect date format !")
-                    print("    Try again")
-                    date = input(f"{message} (YYYY-MM-DD): ")
+        date = input(f"{message} (DD-MM-YYYY): ")
+        while True:
+            try:
+                date == (datetime.strptime(date, "%d/%m/%Y")).date()
+                break
+            except ValueError:
+                print("    Inccorect date format !")
+                print("    Try again")
+                date = input(f"{message} (YYYY-MM-DD): ")
         return date

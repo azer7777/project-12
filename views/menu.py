@@ -93,25 +93,25 @@ class Menu:
                 
                                              Choose an option : """
             )
-            if choice == 1:
+            if choice == "1":
                 full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact = Entries.get_customer_input()
                 Manager().create_customer(full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact)
-            elif choice == 2:
+            elif choice == "2":
                 customer_id, new_email, new_phone = Entries.get_customer_update_input()
                 Manager().update_customer(customer_id, new_email, new_phone, full_name)
-            elif choice == 3:
+            elif choice == "3":
                 contract_id, new_status, new_amount_remaining = Entries.get_contract_update_input()
                 Manager().update_contract_for_sales(contract_id, new_status, new_amount_remaining, full_name)
-            elif choice == 4:
+            elif choice == "4":
                 event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
                 Manager().create_event(event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes) 
-            elif choice == 5:
+            elif choice == "5":
                 Manager().get_all_contracts() 
-            elif choice == 6:
+            elif choice == "6":
                 Manager().get_unsigned_or_not_fully_paid_contracts() 
-            elif choice == 7:
+            elif choice == "7":
                 Manager().get_all_events()
-            elif choice == 8:
+            elif choice == "8":
                 Manager().get_all_customers()                              
             elif choice == "0":
                 print("Logged Out")
@@ -129,16 +129,16 @@ class Menu:
                 
                                              Choose an option : """
             )
-            if choice == 1:
+            if choice == "1":
                 event_id, new_support_contact, new_location, new_notes = Entries.get_event_update_input(role)
                 Manager().update_event(event_id, new_support_contact, new_location, new_notes, role, full_name)
-            elif choice == 2:
+            elif choice == "2":
                 Manager().get_all_customers() 
-            elif choice == 3:
+            elif choice == "3":
                 Manager().get_all_contracts()
-            elif choice == 4:
+            elif choice == "4":
                 Manager().get_all_events() 
-            elif choice == 5:
+            elif choice == "5":
                 Manager.get_events_for_support_user(full_name)                              
             elif choice == "0":
                 print("Logged Out")
