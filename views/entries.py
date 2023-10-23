@@ -95,7 +95,6 @@ class Entries:
         while True:
             try:
                 event_name = input("Enter event name: ")
-                event_id = int(input("Enter event ID: "))
                 contract_id = int(input("Enter contract ID: "))
                 client_name = input("Enter client name: ")
                 client_contact = input("Enter client contact: ")
@@ -105,7 +104,7 @@ class Entries:
                 location = input("Enter location: ")
                 attendees = int(input("Enter number of attendees: "))
                 notes = input("Enter notes: ")
-                return event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes
+                return event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes
             except ValueError:
                 print("Invalid input. Please enter valid integers for event ID, contract ID, and number of attendees.")
             except Exception as e:

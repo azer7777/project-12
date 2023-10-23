@@ -47,11 +47,10 @@ class Manager:
         else:
             print("Customer not found. Delete operation aborted.")
             
-    def create_contract(self, customer_id, customer_information, commercial_contact, total_amount, amount_remaining, creation_date, contract_status):
+    def create_contract(self, customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status):
         contract = Contract(
-            customer_id=customer_id,
-            customer_information=customer_information,
-            commercial_contact=commercial_contact,
+            customer_information=customer_id,
+            sales_contact=sales_contact,
             total_amount=total_amount,
             amount_remaining=amount_remaining,
             creation_date=creation_date,
@@ -105,11 +104,10 @@ class Manager:
         else:
             print("Contract not found. Delete operation aborted.")
 
-    def create_event(self, event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date,
+    def create_event(self, event_name, contract_id, client_name, client_contact, event_start_date, event_end_date,
                      support_contact, location, attendees, notes):
         event = Event(
             event_name=event_name,
-            event_id=event_id,
             contract_id=contract_id,
             client_name=client_name,
             client_contact=client_contact,

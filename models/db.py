@@ -39,9 +39,8 @@ class Contract(Base):
 
 class Event(Base):
     __tablename__ = 'events'
-    id = Column(Integer, primary_key=True)
-    event_name = Column(String, nullable=False)
-    event_id = Column(String, nullable=False)
+    id = Column(Integer, primary_key=True) 
+    event_name = Column(String, nullable=False)   
     contract_id = Column(Integer, ForeignKey('contracts.id'), nullable=False)
     client_name = Column(String, nullable=False)
     client_contact = Column(String, nullable=False)
@@ -49,7 +48,7 @@ class Event(Base):
     event_end_date = Column(Date, nullable=False)
     support_contact = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    attendees = Column(String, nullable=False)
+    attendees = Column(Integer, nullable=False)
     notes = Column(String)
     contract = relationship('Contract', back_populates='events')
 

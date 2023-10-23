@@ -103,8 +103,8 @@ class Menu:
                 contract_id, new_status, new_amount_remaining = Entries.get_contract_update_input()
                 Manager().update_contract_for_sales(contract_id, new_status, new_amount_remaining, full_name)
             elif choice == 4:
-                event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
-                Manager().create_event(event_name, event_id, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes) 
+                event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
+                Manager().create_event(event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes) 
             elif choice == 5:
                 Manager().get_all_contracts() 
             elif choice == 6:
