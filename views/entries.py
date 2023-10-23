@@ -5,12 +5,13 @@ class Entries:
     def get_register_input():
         while True:
             try:
-                username = input("Enter a new username: ")
-                password = input("Enter a new password: ")
+                full_name = input("Enter a full name")
+                username = input("Enter a username: ")
+                password = input("Enter a password: ")
                 role = input("Enter a role (management, sales, or support): ")
                 if role.lower() not in ["management", "sales", "support"]:
                     raise ValueError("Invalid role. Please enter management, sales, or support.")
-                return username, password, role.lower()
+                return full_name, username, password, role.lower()
             except ValueError as e:
                 print(e)
             except Exception as e:
