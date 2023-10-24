@@ -34,7 +34,7 @@ class Manager:
             self.session.commit()
             print("Customer updated successfully.")
         else:
-            print("Customer not found. Update operation aborted.")
+            print("Customer not found or you are not in charge. Update operation aborted.")
 
     def get_all_customers(self):
         customers = self.session.query(Customer).all()
@@ -138,15 +138,29 @@ class Manager:
             self.session.rollback()
             print(f"An error occurred: {e}")
 
-    def update_event(self, event_id, new_support_contact, new_location, new_notes, role, user_full_name):
+    def update_event(self, event_id, event_name, client_name, client_contact, event_start_date, event_end_date,
+                     new_support_contact, new_location, attendees, new_notes, role, user_full_name):
         if role == "management":
             existing_event = self.session.query(Event).filter_by(id=event_id).first()
         else:
             existing_event = self.session.query(Event).filter_by(id=event_id, support_contact=user_full_name).first()
-
         if existing_event:
-            update_query = text("UPDATE events SET support_contact=:new_support_contact, location=:new_location, notes=:new_notes WHERE id=:event_id")
-            self.session.execute(update_query, {"new_support_contact": new_support_contact, "new_location": new_location, "new_notes": new_notes, "event_id": event_id})
+            update_query = text("UPDATE events SET event_name=:event_name, client_name=:client_name, "
+                                "client_contact=:client_contact, event_start_date=:event_start_date, "
+                                "event_end_date=:event_end_date, support_contact=:new_support_contact, "
+                                "location=:new_location, attendees=:attendees, notes=:new_notes WHERE id=:event_id")
+            self.session.execute(update_query, {
+                "event_name": event_name,
+                "client_name": client_name,
+                "client_contact": client_contact,
+                "event_start_date": event_start_date,
+                "event_end_date": event_end_date,
+                "new_support_contact": new_support_contact,
+                "new_location": new_location,
+                "attendees": attendees,
+                "new_notes": new_notes,
+                "event_id": event_id
+            })
             self.session.commit()
             print("Event updated successfully.")
         else:

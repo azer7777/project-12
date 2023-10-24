@@ -36,8 +36,7 @@ class Entries:
                 company_name = input("Enter company name: ")
                 creation_date = Entries.check_date_format("Enter creation date")
                 last_contact_date = Entries.check_date_format("Enter last contact date")
-                sales_contact = input("Enter sales contact: ")
-                return full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact
+                return full_name, email, phone, company_name, creation_date, last_contact_date
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")    
     
