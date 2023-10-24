@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import IntegrityError
 from models.db import engine, Customer, Contract, Event
 from sqlalchemy import text
+from tabulate import tabulate
 
 class Manager:
     def __init__(self):
@@ -10,10 +10,6 @@ class Manager:
 
     def create_customer(self, full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact):
         try:
-            existing_customer = self.session.query(Customer).filter_by(email=email).first()
-            if existing_customer:
-                print("Error: The provided email address is already associated with another customer.")
-            else:
                 customer = Customer(
                     full_name=full_name,
                     email=email,
@@ -26,9 +22,6 @@ class Manager:
                 self.session.add(customer)
                 self.session.commit()
                 print("Customer created successfully.")
-        except IntegrityError as e:
-            self.session.rollback()
-            print("Error: The provided email address is already associated with another customer.")
         except Exception as e:
             self.session.rollback()
             print(f"An error occurred: {e}")
@@ -45,10 +38,9 @@ class Manager:
 
     def get_all_customers(self):
         customers = self.session.query(Customer).all()
-        if not customers:
-            print("No customers found in the database.")
         return customers
 
+            
     def delete_customer(self, customer_id):
         existing_customer = self.session.query(Customer).filter_by(id=customer_id).first()
         if existing_customer:
@@ -75,9 +67,7 @@ class Manager:
                 self.session.commit()
                 print("Contract created successfully.")
             else:
-                print(f"Error: Customer with ID {customer_id} not found.")
-        except ValueError as e:
-            print("Invalid date format. Please use YYYY-MM-DD for the creation date.")
+                print(f"Customer with ID {customer_id} not found. operation aborted.")
         except Exception as e:
             self.session.rollback()
             print(f"An error occurred: {e}")
@@ -104,16 +94,12 @@ class Manager:
 
     def get_all_contracts(self):
         contracts = self.session.query(Contract).all()
-        if not contracts:
-            print("No contracts found in the database.")
         return contracts
     
     def get_unsigned_or_not_fully_paid_contracts(self):
         contracts = self.session.query(Contract).filter(
             (Contract.contract_status != "signed") | (Contract.amount_remaining > 0)
         ).all()
-        if not contracts:
-            print("No results found in the database.")
         return contracts
 
     def delete_contract(self, contract_id):
@@ -147,9 +133,7 @@ class Manager:
                 self.session.commit()
                 print("Event created successfully.")
             else:
-                print(f"Error: Contract with ID {contract_id} not found.")
-        except ValueError as e:
-            print("Invalid date format. Please use YYYY-MM-DD for the creation date.")
+                print(f"Contract with ID {contract_id} not found. operation aborted.")
         except Exception as e:
             self.session.rollback()
             print(f"An error occurred: {e}")
@@ -170,20 +154,14 @@ class Manager:
 
     def get_all_events(self):
         events = self.session.query(Event).all()
-        if not events:
-            print("No events found in the database.")
         return events
     
     def get_events_without_support(self):
         events = self.session.query(Event).filter(Event.support_contact.is_(None)).all()
-        if not events:
-            print("No results found in the database.")
         return events
 
     def get_events_for_support_user(self, support_contact):
         events = self.session.query(Event).filter_by(support_contact=support_contact).all()
-        if not events:
-            print("No results found in the database.")
         return events
 
     def delete_event(self, event_id):
@@ -194,4 +172,41 @@ class Manager:
             self.session.commit()
             print("Event deleted successfully.")
         else:
-            print("Event not found. Update operation aborted.")       
+            print("Event not found. Update operation aborted.")
+
+    def display_customers(self, customers):
+        if customers:
+            headers = ["ID", "Full Name", "Email", "Phone", "Company Name", "Creation Date", "Last Contact Date", "Sales Contact"]
+            table = [
+                [customer.id, customer.full_name, customer.email, customer.phone, customer.company_name,
+                 customer.creation_date, customer.last_contact_date, customer.sales_contact] for customer in customers
+            ]
+            print(tabulate(table, headers=headers, tablefmt="pretty"))
+        else:
+            print("No customers found in the database.")
+            
+    def display_contracts(self, contracts):
+        if contracts:
+            headers = ["ID", "Customer ID", "Sales Contact", "Total Amount", "Amount Remaining", "Creation Date", "Contract Status"]
+            table = [
+                [contract.id, contract.customer_id, contract.sales_contact, contract.total_amount, 
+                 contract.amount_remaining, contract.creation_date, contract.contract_status] for contract in contracts
+            ]
+            print(tabulate(table, headers=headers, tablefmt="pretty"))
+        else:
+            print("No contracts found in the database.")        
+
+    def display_events(self, events):
+        if events:
+            headers = ["ID", "Event Name", "Contract ID", "Client Name", "Client Contact", 
+                       "Event Start Date", "Event End Date", "Support Contact", 
+                       "Location", "Attendees", "Notes"]
+            table = [
+                [event.id, event.event_name, event.contract_id, event.client_name, 
+                 event.client_contact, event.event_start_date, event.event_end_date, 
+                 event.support_contact, event.location, event.attendees, event.notes] 
+                for event in events
+            ]
+            print(tabulate(table, headers=headers, tablefmt="pretty"))
+        else:
+            print("No events found in the database.")     

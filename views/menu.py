@@ -15,15 +15,15 @@ class Menu:
             if choice == "1":
                 username = input("Enter your username: ")
                 password = input("Enter your password: ")
-                full_name, role = authenticate(username, password)
+                user_full_name, role = authenticate(username, password)
                 if role:
                     print(f"Authentication successful. You are logged in as {role}.")
                     if role == "management":
-                        self.management_menu(role, full_name)
+                        self.management_menu(role, user_full_name)
                     elif role == "sales":
-                        self.sales_menu(role, full_name)
+                        self.sales_menu(role, user_full_name)
                     else:
-                        self.support_menu(role, full_name)
+                        self.support_menu(role, user_full_name)
                 else:
                     print("Authentication failed. Invalid username or password.")
             elif choice == "0":
@@ -32,9 +32,9 @@ class Menu:
             else:
                 print("Invalid choice.")
 
-    def management_menu(self, role, full_name):
+    def management_menu(self, role, user_full_name):
         while True:
-            print(f"Menu for {role}, collaborator: {full_name}")
+            print(f"Menu for {role}, collaborator: {user_full_name}")
             choice = input(
             """
                 1. Register collaborator    2. Update collaborator    3. Delete collaborator
@@ -66,7 +66,9 @@ class Menu:
                 contract_id = input("Enter contract ID: ")
                 Manager().delete_contract(contract_id)
             elif choice == "7":
-                Manager().get_all_contracts()
+                contracts = Manager().get_all_contracts()
+                Manager().display_contracts(contracts)
+                
             elif choice == "8":
                 Manager().get_all_events()
             elif choice == "9":
@@ -82,9 +84,9 @@ class Menu:
             else:
                 print("Invalid choice.")
                
-    def sales_menu(self, role, full_name):
+    def sales_menu(self, role, user_full_name):
         while True:
-            print(f"Menu for {role}, collaborator: {full_name}")
+            print(f"Menu for {role}, collaborator: {user_full_name}")
             choice = input(
             """
                 1. Create Customer          2. Update Customer        3. Update Contract
@@ -98,10 +100,10 @@ class Menu:
                 Manager().create_customer(full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact)
             elif choice == "2":
                 customer_id, new_email, new_phone = Entries.get_customer_update_input()
-                Manager().update_customer(customer_id, new_email, new_phone, full_name)
+                Manager().update_customer(customer_id, new_email, new_phone, user_full_name)
             elif choice == "3":
                 contract_id, new_status, new_amount_remaining = Entries.get_contract_update_input()
-                Manager().update_contract_for_sales(contract_id, new_status, new_amount_remaining, full_name)
+                Manager().update_contract_for_sales(contract_id, new_status, new_amount_remaining, user_full_name)
             elif choice == "4":
                 event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
                 Manager().create_event(event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes) 
@@ -119,9 +121,9 @@ class Menu:
             else:
                 print("Invalid choice.")       
 
-    def support_menu(self, role, full_name):
+    def support_menu(self, role, user_full_name):
         while True:
-            print(f"Menu for {role}, collaborator: {full_name}")
+            print(f"Menu for {role}, collaborator: {user_full_name}")
             choice = input(
             """
                 1. Update Event             2. List All Customers      3. List All Contracts
@@ -131,7 +133,7 @@ class Menu:
             )
             if choice == "1":
                 event_id, new_support_contact, new_location, new_notes = Entries.get_event_update_input(role)
-                Manager().update_event(event_id, new_support_contact, new_location, new_notes, role, full_name)
+                Manager().update_event(event_id, new_support_contact, new_location, new_notes, role, user_full_name)
             elif choice == "2":
                 Manager().get_all_customers() 
             elif choice == "3":
@@ -139,7 +141,7 @@ class Menu:
             elif choice == "4":
                 Manager().get_all_events() 
             elif choice == "5":
-                Manager.get_events_for_support_user(full_name)                              
+                Manager.get_events_for_support_user(user_full_name)                              
             elif choice == "0":
                 print("Logged Out")
                 break

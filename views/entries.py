@@ -86,7 +86,7 @@ class Entries:
                 return contract_id, new_status, new_amount_remaining
             except ValueError:
                 print(
-                    "Invalid input. Please enter a valid integer for contract ID and a valid number for amount remaining."
+                    "Invalid input. Please enter a valid integer for contract ID and/or a valid number for amount remaining."
                 )
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
@@ -106,7 +106,7 @@ class Entries:
                 notes = input("Enter notes: ")
                 return event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes
             except ValueError:
-                print("Invalid input. Please enter valid integers for event ID, contract ID, and number of attendees.")
+                print("Invalid input. Please enter valid integers for contract ID and/or number of attendees.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
@@ -130,13 +130,14 @@ class Entries:
                 print(f"An error occurred: {e}. Please try again.")
 
     def check_date_format(message):
-        date = input(f"{message} (YYYY-MM-DD): ")
-        while True:
-            try:
-                date == (datetime.strptime(date, "%Y-%m-%d")).date()
-                break
-            except ValueError:
-                print("    Inccorect date format !")
-                print("    Try again")
-                date = input(f"{message} (YYYY-MM-DD): ")
-        return date
+            date = input(f"{message} (DD-MM-YYYY): ")
+            if date != "":
+                while True:
+                    try:
+                        date == (datetime.strptime(date, "%d/%m/%Y")).date()
+                        break
+                    except ValueError:
+                        print("    Inccorect date format !")
+                        print("    Try again")
+                        date = input(f"{message} (YYYY-MM-DD): ")
+            return date
