@@ -138,29 +138,32 @@ class Manager:
             self.session.rollback()
             print(f"An error occurred: {e}")
 
-    def update_event(self, event_id, event_name, client_name, client_contact, event_start_date, event_end_date,
-                     new_support_contact, new_location, attendees, new_notes, role, user_full_name):
+    def update_event(self, event_id, new_event_name, new_client_name, new_client_contact,
+                     new_event_start_date, new_event_end_date, new_support_contact,
+                     new_location, new_attendees, new_notes, role, user_full_name):
         if role == "management":
             existing_event = self.session.query(Event).filter_by(id=event_id).first()
         else:
             existing_event = self.session.query(Event).filter_by(id=event_id, support_contact=user_full_name).first()
         if existing_event:
-            update_query = text("UPDATE events SET event_name=:event_name, client_name=:client_name, "
-                                "client_contact=:client_contact, event_start_date=:event_start_date, "
-                                "event_end_date=:event_end_date, support_contact=:new_support_contact, "
-                                "location=:new_location, attendees=:attendees, notes=:new_notes WHERE id=:event_id")
-            self.session.execute(update_query, {
-                "event_name": event_name,
-                "client_name": client_name,
-                "client_contact": client_contact,
-                "event_start_date": event_start_date,
-                "event_end_date": event_end_date,
-                "new_support_contact": new_support_contact,
-                "new_location": new_location,
-                "attendees": attendees,
-                "new_notes": new_notes,
-                "event_id": event_id
-            })
+            update_dict = {
+                "event_name": new_event_name,
+                "client_name": new_client_name,
+                "client_contact": new_client_contact,
+                "event_start_date": new_event_start_date,
+                "event_end_date": new_event_end_date,
+                "support_contact": new_support_contact,
+                "location": new_location,
+                "attendees": new_attendees,
+                "notes": new_notes
+            }
+            # Remove empty string values from the update_dict
+            update_dict = {key: value for key, value in update_dict.items() if value != ""}
+            # Prepare the SET part of the SQL query dynamically based on non-empty values
+            set_clause = ", ".join([f"{key}=:new_{key}" for key in update_dict.keys()])
+            update_query = text(f"UPDATE events SET {set_clause} WHERE id=:event_id")
+            # Execute the update query with non-empty values
+            self.session.execute(update_query, {**{f"new_{key}": value for key, value in update_dict.items()}, "event_id": event_id})
             self.session.commit()
             print("Event updated successfully.")
         else:

@@ -113,16 +113,27 @@ class Entries:
         while True:
             try:
                 event_id = int(input("Enter event ID: "))
-                new_support_contact = None
-                new_location = None
-                new_notes = None
+                new_event_name = ""    
+                new_client_name = ""
+                new_client_contact = ""
+                new_event_start_date = ""
+                new_event_end_date = ""
+                new_support_contact = ""
+                new_location = ""
+                new_attendees = ""
+                new_notes = "" 
                 if role == "management":
                     new_support_contact = input("Enter new support contact (or press Enter to keep current support contact): ")
-                if role == "support":
-                    new_location = input("Enter new location (or press Enter to keep current location): ")
-                if role == "support":
-                    new_notes = input("Enter new notes (or press Enter to keep current notes): ")
-                return event_id, new_support_contact, new_location, new_notes
+                elif role == "support":
+                    new_event_name = input("Enter new event_name (or press Enter to skip): ")    
+                    new_client_name = input("Enter new client name (or press Enter to skip): ")
+                    new_client_contact = input("Enter new client contact (or press Enter to skip): ")
+                    new_event_start_date = Entries.check_date_format("Enter new event start date (or press Enter to skip):")
+                    new_event_end_date = Entries.check_date_format("Enter new event end date (or press Enter to skip): ")
+                    new_location = input("Enter new location (or press Enter to skip): ")
+                    new_attendees = input("Enter new attendess (or press Enter to skip): ")
+                    new_notes = input("Enter new notes (or press Enter to skip): ")                     
+                return event_id, new_event_name, new_client_name, new_client_contact, new_event_start_date, new_event_end_date, new_support_contact, new_location, new_attendees, new_notes
             except ValueError:
                 print("Invalid input. Please enter a valid integer for event ID.")
             except Exception as e:

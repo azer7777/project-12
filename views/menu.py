@@ -65,8 +65,8 @@ class Menu:
                 events = self.manager.get_events_without_support()
                 self.manager.display_events(events)
             elif choice == "8":
-                event_id, new_support_contact, new_location, new_notes = Entries.get_event_update_input(role)
-                self.manager.update_event(event_id, new_support_contact, new_location, new_notes, role, "")
+                event_id, new_event_name, new_client_name, new_client_contact, new_event_start_date, new_event_end_date, new_support_contact, new_location, new_attendees, new_notes = Entries.get_event_update_input(role)
+                self.manager.update_event(event_id, new_event_name, new_client_name, new_client_contact, new_event_start_date, new_event_end_date, new_support_contact, new_location, new_attendees, new_notes, role, "")
             elif choice == "9":
                 customers = self.manager.get_all_customers()
                 self.manager.display_customers(customers)      
@@ -128,8 +128,8 @@ class Menu:
                                              Choose an option : """
             )
             if choice == "1":
-                event_id, new_support_contact, new_location, new_notes = Entries.get_event_update_input(role)
-                self.manager.update_event(event_id, new_support_contact, new_location, new_notes, role, user_full_name)
+                event_id, new_event_name, new_client_name, new_client_contact, new_event_start_date, new_event_end_date, new_support_contact, new_location, new_attendees, new_notes = Entries.get_event_update_input(role)
+                self.manager.update_event(event_id, new_event_name, new_client_name, new_client_contact, new_event_start_date, new_event_end_date, new_support_contact, new_location, new_attendees, new_notes, role, user_full_name)
             elif choice == "2":
                 customers = self.manager.get_all_customers()
                 self.manager.display_customers(customers) 
