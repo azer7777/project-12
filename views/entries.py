@@ -11,6 +11,8 @@ class Entries:
                 role = input("Enter a role (management, sales, or support): ")
                 if role.lower() not in ["management", "sales", "support"]:
                     raise ValueError("Invalid role. Please enter management, sales, or support.")
+                if len(full_name) < 3 or len(username) < 3:
+                    raise ValueError("username or full name too short !") 
                 return full_name, username, password, role.lower()
             except ValueError as e:
                 print(e)
@@ -61,7 +63,7 @@ class Entries:
                 total_amount = float(input("Enter total amount: "))
                 amount_remaining = float(input("Enter amount remaining: "))
                 creation_date = Entries.check_date_format("Enter creation date")
-                contract_status = input("Enter contract status: ")
+                contract_status = input("Enter contract status (if signed , enter 'signed'): ")
                 return customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status
             except ValueError:
                 print(
@@ -74,7 +76,7 @@ class Entries:
         while True:
             try:
                 contract_id = int(input("Enter contract ID: "))
-                new_status = input("Enter contract new status (or press Enter to keep current status): ")
+                new_status = input("Enter contract new status (if signed enter 'signed' or press Enter to skip): ")
                 if not new_status:
                     new_status = None
                 new_amount_remaining_input = input("Enter amount remaining (or press Enter to keep current amount): ")

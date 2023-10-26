@@ -45,7 +45,7 @@ class Menu:
                                              Choose an option : """
             )
             if choice == "1":
-                self.manage_accounts_menu()
+                self.manage_accounts_menu(role, user_full_name)
             elif choice == "2":
                 customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status = Entries.get_contract_input()
                 self.manager.create_contract(customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status)
@@ -98,7 +98,7 @@ class Menu:
                 self.manager.update_contract_for_sales(contract_id, new_status, new_amount_remaining, user_full_name)
             elif choice == "4":
                 event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
-                self.manager.create_event(event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes) 
+                self.manager.create_event(event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes, user_full_name) 
             elif choice == "5":
                 contracts = self.manager.get_all_contracts()
                 self.manager.display_contracts(contracts) 
@@ -140,7 +140,7 @@ class Menu:
                 events = self.manager.get_all_events()
                 self.manager.display_events(events) 
             elif choice == "5":
-                events = Manager.get_events_for_support_user(user_full_name)
+                events = self.manager.get_events_for_support_user(user_full_name)
                 self.manager.display_events(events)                              
             elif choice == "0":
                 print("Logged Out")
@@ -149,12 +149,13 @@ class Menu:
                 print("Invalid choice.")
 
 
-    def manage_accounts_menu(self):
+    def manage_accounts_menu(self, role, user_full_name):
         while True:
             print("Account Menu")
             choice = input(
             """
                 1. Register collaborator    2. Update collaborator    3. Delete collaborator
+                4. Management menu
                 
                                              Choose an option : """
             )
@@ -169,4 +170,9 @@ class Menu:
             elif choice == "3":
                 username = input("Enter a username: ")
                 result = delete_user(username)
-                print(result)          
+                print(result)
+            elif choice == "4":
+                self.management_menu(role, user_full_name)
+                break
+            else:
+                print("Invalid choice.")                         

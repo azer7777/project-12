@@ -113,10 +113,11 @@ class Manager:
             print("Contract not found. Delete operation aborted.")
 
     def create_event(self, event_name, contract_id, client_name, client_contact, event_start_date, event_end_date,
-                     support_contact, location, attendees, notes):
+                     support_contact, location, attendees, notes, user_full_name):
         try:
-            contract = self.session.query(Contract).filter_by(id=contract_id).first()
-            if contract:
+            contract = self.session.query(Contract).filter_by(id=contract_id, contract_status="signed").first()
+            customer = self.session.query(Customer).filter_by(id=contract.customer_id, sales_contact=user_full_name).first()           
+            if contract and customer:
                 event = Event(
                     event_name=event_name,
                     contract_id=contract_id,
@@ -133,7 +134,7 @@ class Manager:
                 self.session.commit()
                 print("Event created successfully.")
             else:
-                print(f"Contract with ID {contract_id} not found. operation aborted.")
+                print(f"Contract with ID {contract_id} not found or not ready or you dont have access. operation aborted.")
         except Exception as e:
             self.session.rollback()
             print(f"An error occurred: {e}")
@@ -159,13 +160,16 @@ class Manager:
             }
             # Remove empty string values from the update_dict
             update_dict = {key: value for key, value in update_dict.items() if value != ""}
-            # Prepare the SET part of the SQL query dynamically based on non-empty values
-            set_clause = ", ".join([f"{key}=:new_{key}" for key in update_dict.keys()])
-            update_query = text(f"UPDATE events SET {set_clause} WHERE id=:event_id")
-            # Execute the update query with non-empty values
-            self.session.execute(update_query, {**{f"new_{key}": value for key, value in update_dict.items()}, "event_id": event_id})
-            self.session.commit()
-            print("Event updated successfully.")
+            if update_dict:
+                # Prepare the SET part of the SQL query dynamically based on non-empty values
+                set_clause = ", ".join([f"{key}=:new_{key}" for key in update_dict.keys()])
+                update_query = text(f"UPDATE events SET {set_clause} WHERE id=:event_id")
+                # Execute the update query with non-empty values
+                self.session.execute(update_query, {**{f"new_{key}": value for key, value in update_dict.items()}, "event_id": event_id})
+                self.session.commit()
+                print("Event updated successfully.")
+            else:
+                print("No valid fields provided for update.")
         else:
             print("Event not found. Update operation aborted.")
 
@@ -204,14 +208,17 @@ class Manager:
             
     def display_contracts(self, contracts):
         if contracts:
-            headers = ["ID", "Customer ID", "Sales Contact", "Total Amount", "Amount Remaining", "Creation Date", "Contract Status"]
-            table = [
-                [contract.id, contract.customer_id, contract.sales_contact, contract.total_amount, 
-                 contract.amount_remaining, contract.creation_date, contract.contract_status] for contract in contracts
-            ]
+            headers = ["ID", "Customer ID", "Customer Information", "Sales Contact", "Total Amount", "Amount Remaining", "Creation Date", "Contract Status"]
+            table = []
+            for contract in contracts:
+                customer = self.session.query(Customer).filter_by(id=contract.customer_id).first()
+                customer_info = ""
+                if customer:
+                    customer_info = f"{customer.full_name} {customer.email} {customer.phone} {customer.company_name}"
+                table.append([contract.id, contract.customer_id, customer_info, contract.sales_contact, contract.total_amount, contract.amount_remaining, contract.creation_date, contract.contract_status])
             print(tabulate(table, headers=headers, tablefmt="pretty"))
         else:
-            print("No contracts found in the database.")        
+            print("No contracts found in the database.")      
 
     def display_events(self, events):
         if events:
