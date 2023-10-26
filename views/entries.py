@@ -46,9 +46,12 @@ class Entries:
         while True:
             try:
                 customer_id = int(input("Enter customer ID: "))
-                new_email = input("Enter new email: ")
-                new_phone = input("Enter new phone: ")
-                return customer_id, new_email, new_phone
+                new_full_name = input("Enter new full name (or press Enter to skip): ")
+                new_email = input("Enter new email (or press Enter to skip): ")
+                new_phone = input("Enter new phone (or press Enter to skip): ")
+                new_company_name = input("Enter new company name (or press Enter to skip): ")
+                new_last_contact_date = input("Enter new last contact date (or press Enter to skip): ")
+                return customer_id, new_full_name, new_email, new_phone, new_company_name, new_last_contact_date
     
             except ValueError:
                 print("Invalid input. Please enter a valid integer for customer ID.")

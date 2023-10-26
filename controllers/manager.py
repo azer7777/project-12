@@ -26,21 +26,32 @@ class Manager:
             self.session.rollback()
             print(f"An error occurred: {e}")
 
-    def update_customer(self, customer_id, new_email, new_phone, user_full_name):
+    def update_customer(self, customer_id, new_full_name, new_email, new_phone, new_company_name, new_last_contact_date, user_full_name):
         existing_customer = self.session.query(Customer).filter_by(id=customer_id, sales_contact=user_full_name).first()
         if existing_customer:
-            update_query = text("UPDATE customers SET email=:new_email, phone=:new_phone WHERE id=:customer_id")
-            self.session.execute(update_query, {"new_email": new_email, "new_phone": new_phone, "customer_id": customer_id})
-            self.session.commit()
-            print("Customer updated successfully.")
+            update_dict = {
+                "full_name": new_full_name,
+                "email": new_email,
+                "phone": new_phone,
+                "company_name": new_company_name,
+                "last_contact_date": new_last_contact_date
+            }
+            update_dict = {key: value for key, value in update_dict.items() if value != ""}
+            if update_dict:
+                set_clause = ", ".join([f"{key}=:new_{key}" for key in update_dict.keys()])
+                update_query = text(f"UPDATE customers SET {set_clause} WHERE id=:customer_id")
+                self.session.execute(update_query, {**{f"new_{key}": value for key, value in update_dict.items()}, "customer_id": customer_id})
+                self.session.commit()
+                print("Customer updated successfully.")
+            else:
+                print("Event updated successfully.")
         else:
             print("Customer not found or you are not in charge. Update operation aborted.")
 
     def get_all_customers(self):
         customers = self.session.query(Customer).all()
         return customers
-
-            
+           
     def delete_customer(self, customer_id):
         existing_customer = self.session.query(Customer).filter_by(id=customer_id).first()
         if existing_customer:
@@ -72,25 +83,29 @@ class Manager:
             self.session.rollback()
             print(f"An error occurred: {e}")
     
-    def update_contract(self, contract_id, new_status, new_amount_remaining):
-        existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()
+    def update_contract(self, contract_id, new_total_amount, new_amount_remaining, new_contract_status, role, user_full_name):
+        if role == "management":
+            existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()
+        else:
+            existing_contract = self.session.query(Contract).filter_by(id=contract_id, commercial_contact=user_full_name).first()   
         if existing_contract:
-            update_query = text("UPDATE contracts SET contract_status=:new_status, amount_remaining=:new_amount_remaining WHERE id=:contract_id")
-            self.session.execute(update_query, {"new_status": new_status, "new_amount_remaining": new_amount_remaining, "contract_id": contract_id})
-            self.session.commit()
-            print("Contract updated successfully.")
+            update_dict = {
+                "total_amount": new_total_amount,
+                "amount_remaining": new_amount_remaining,
+                "contract_status": new_contract_status
+            }
+            update_dict = {key: value for key, value in update_dict.items() if value != ""}
+            if update_dict:
+                set_clause = ", ".join([f"{key}=:new_{key}" for key in update_dict.keys()])
+                update_query = text(f"UPDATE contracts SET {set_clause} WHERE id=:contract_id")
+                self.session.execute(update_query, {**{f"new_{key}": value for key, value in update_dict.items()}, "contract_id": contract_id})
+                self.session.commit()
+                print("Contract updated successfully.")
+            else:
+                print("Contract updated successfully.")
         else:
             print("Contract not found. Update operation aborted.")
 
-    def update_contract_for_sales(self, contract_id, new_status, new_amount_remaining, user_name):
-        existing_contract = self.session.query(Contract).filter_by(id=contract_id, commercial_contact=user_name).first()
-        if existing_contract:
-            update_query = text("UPDATE contracts SET contract_status=:new_status, amount_remaining=:new_amount_remaining WHERE id=:contract_id")
-            self.session.execute(update_query, {"new_status": new_status, "new_amount_remaining": new_amount_remaining, "contract_id": contract_id})
-            self.session.commit()
-            print("Contract updated successfully.")
-        else:
-            print("Contract not found. Update operation aborted.")
 
     def get_all_contracts(self):
         contracts = self.session.query(Contract).all()
@@ -169,7 +184,7 @@ class Manager:
                 self.session.commit()
                 print("Event updated successfully.")
             else:
-                print("No valid fields provided for update.")
+                print("Event updated successfully.")
         else:
             print("Event not found. Update operation aborted.")
 

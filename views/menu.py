@@ -91,11 +91,11 @@ class Menu:
                 full_name, email, phone, company_name, creation_date, last_contact_date = Entries.get_customer_input()
                 self.manager.create_customer(full_name, email, phone, company_name, creation_date, last_contact_date, sales_contact=user_full_name)
             elif choice == "2":
-                customer_id, new_email, new_phone = Entries.get_customer_update_input()
-                self.manager.update_customer(customer_id, new_email, new_phone, user_full_name)
+                customer_id, new_full_name, new_email, new_phone, new_company_name, new_last_contact_date = Entries.get_customer_update_input()
+                self.manager.update_customer(customer_id, new_full_name, new_email, new_phone, new_company_name, new_last_contact_date, user_full_name)
             elif choice == "3":
                 contract_id, new_status, new_amount_remaining = Entries.get_contract_update_input()
-                self.manager.update_contract_for_sales(contract_id, new_status, new_amount_remaining, user_full_name)
+                self.manager.update_contract_for_sales(contract_id, new_status, new_amount_remaining, role, user_full_name)
             elif choice == "4":
                 event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
                 self.manager.create_event(event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes, user_full_name) 
