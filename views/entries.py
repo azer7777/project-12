@@ -75,22 +75,20 @@ class Entries:
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
-    def get_contract_update_input():
+    def get_contract_update_input(role):
         while True:
             try:
+                new_sales_contact = ""
+                if role == "managements":
+                    new_sales_contact = input("Enter new sales contact (or press Enter to skip)")                  
                 contract_id = int(input("Enter contract ID: "))
-                new_status = input("Enter contract new status (if signed enter 'signed' or press Enter to skip): ")
-                if not new_status:
-                    new_status = None
-                new_amount_remaining_input = input("Enter amount remaining (or press Enter to keep current amount): ")
-                if new_amount_remaining_input:
-                    new_amount_remaining = float(new_amount_remaining_input)
-                else:
-                    new_amount_remaining = None
-                return contract_id, new_status, new_amount_remaining
+                new_total_amount = input("Enter new total amount (or press Enter to skip)")
+                new_amount_remaining = input("Enter new amount remaining (or press Enter to skip)")
+                new_contract_status = input("Enter contract new status (if signed enter 'signed' or press Enter to skip): ")
+                return contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status
             except ValueError:
                 print(
-                    "Invalid input. Please enter a valid integer for contract ID and/or a valid number for amount remaining."
+                    "Invalid input. Please enter a valid contract ID."
                 )
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")

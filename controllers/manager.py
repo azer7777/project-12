@@ -83,13 +83,14 @@ class Manager:
             self.session.rollback()
             print(f"An error occurred: {e}")
     
-    def update_contract(self, contract_id, new_total_amount, new_amount_remaining, new_contract_status, role, user_full_name):
+    def update_contract(self, contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status, role, user_full_name):
         if role == "management":
             existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()
         else:
             existing_contract = self.session.query(Contract).filter_by(id=contract_id, commercial_contact=user_full_name).first()   
         if existing_contract:
             update_dict = {
+                "sales_contact": new_sales_contact,
                 "total_amount": new_total_amount,
                 "amount_remaining": new_amount_remaining,
                 "contract_status": new_contract_status

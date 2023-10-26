@@ -50,8 +50,8 @@ class Menu:
                 customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status = Entries.get_contract_input()
                 self.manager.create_contract(customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status)
             elif choice == "3":
-                contract_id, new_status, new_amount_remaining = Entries.get_contract_update_input()
-                self.manager.update_contract(contract_id, new_status, new_amount_remaining)
+                contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status = Entries.get_contract_update_input(role)
+                self.manager.update_contract(contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status, role, "")
             elif choice == "4":
                 contract_id = input("Enter contract ID: ")
                 self.manager.delete_contract(contract_id)
@@ -94,8 +94,8 @@ class Menu:
                 customer_id, new_full_name, new_email, new_phone, new_company_name, new_last_contact_date = Entries.get_customer_update_input()
                 self.manager.update_customer(customer_id, new_full_name, new_email, new_phone, new_company_name, new_last_contact_date, user_full_name)
             elif choice == "3":
-                contract_id, new_status, new_amount_remaining = Entries.get_contract_update_input()
-                self.manager.update_contract_for_sales(contract_id, new_status, new_amount_remaining, role, user_full_name)
+                contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status = Entries.get_contract_update_input(role)
+                self.manager.update_contract(contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status, role, user_full_name)
             elif choice == "4":
                 event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes = Entries.get_event_input()
                 self.manager.create_event(event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes, user_full_name) 
