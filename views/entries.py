@@ -36,7 +36,7 @@ class Entries:
                 email = input("Enter email: ")
                 phone = input("Enter phone number: ")
                 company_name = input("Enter company name: ")
-                creation_date = Entries.check_date_format("Enter creation date")
+                creation_date = datetime.now().strftime("%d %m %Y %H:%M")
                 last_contact_date = Entries.check_date_format("Enter last contact date")
                 return full_name, email, phone, company_name, creation_date, last_contact_date
             except Exception as e:
@@ -63,14 +63,14 @@ class Entries:
             try:
                 customer_id = int(input("Enter customer ID: "))
                 sales_contact = input("Enter sales contact: ")
-                total_amount = float(input("Enter total amount: "))
-                amount_remaining = float(input("Enter amount remaining: "))
-                creation_date = Entries.check_date_format("Enter creation date")
+                total_amount = input("Enter total amount: ")
+                amount_remaining = input("Enter amount remaining: ")
+                creation_date = datetime.now().strftime("%d %m %Y %H:%M")
                 contract_status = input("Enter contract status (if signed , enter 'signed'): ")
                 return customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status
             except ValueError:
                 print(
-                    "Invalid input. Please enter a valid number for customer ID, total amount, and amount remaining."
+                    "Invalid input. Please enter a valid customer ID."
                 )
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
@@ -104,11 +104,11 @@ class Entries:
                 event_end_date = Entries.check_date_format("Enter event end date")
                 support_contact = input("Enter support contact: ")
                 location = input("Enter location: ")
-                attendees = int(input("Enter number of attendees: "))
+                attendees = input("Enter number of attendees: ")
                 notes = input("Enter notes: ")
                 return event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes
             except ValueError:
-                print("Invalid input. Please enter valid integers for contract ID and/or number of attendees.")
+                print("Invalid input. Please enter a valid contract ID.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
