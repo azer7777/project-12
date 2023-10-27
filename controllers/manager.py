@@ -87,7 +87,7 @@ class Manager:
         if role == "management":
             existing_contract = self.session.query(Contract).filter_by(id=contract_id).first()
         else:
-            existing_contract = self.session.query(Contract).filter_by(id=contract_id, commercial_contact=user_full_name).first()   
+            existing_contract = self.session.query(Contract).filter_by(id=contract_id, sales_contact=user_full_name).first()   
         if existing_contract:
             update_dict = {
                 "sales_contact": new_sales_contact,
@@ -229,7 +229,7 @@ class Manager:
             for contract in contracts:
                 customer = self.session.query(Customer).filter_by(id=contract.customer_id).first()
                 if customer:
-                    customer_info = f"{customer.full_name}\n{customer.email}\n{customer.phone}\n{customer.company_name}"
+                    customer_info = f"Name:{customer.full_name}\nEmail:{customer.email}\nPhone:{customer.phone}\n"
                 else:
                     customer_info = "Customer not found"
                 table.append([contract.id, contract.customer_id, customer_info, contract.sales_contact, contract.total_amount, contract.amount_remaining, contract.creation_date, contract.contract_status])

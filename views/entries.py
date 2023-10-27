@@ -78,12 +78,12 @@ class Entries:
     def get_contract_update_input(role):
         while True:
             try:
-                new_sales_contact = ""
-                if role == "managements":
-                    new_sales_contact = input("Enter new sales contact (or press Enter to skip)")                  
                 contract_id = int(input("Enter contract ID: "))
-                new_total_amount = input("Enter new total amount (or press Enter to skip)")
-                new_amount_remaining = input("Enter new amount remaining (or press Enter to skip)")
+                new_sales_contact = ""
+                if role == "management":
+                    new_sales_contact = input("Enter new sales contact (or press Enter to skip):")                  
+                new_total_amount = input("Enter new total amount (or press Enter to skip):")
+                new_amount_remaining = input("Enter new amount remaining (or press Enter to skip):")
                 new_contract_status = input("Enter contract new status (if signed enter 'signed' or press Enter to skip): ")
                 return contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status
             except ValueError:
