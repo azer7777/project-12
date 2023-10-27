@@ -228,13 +228,15 @@ class Manager:
             table = []
             for contract in contracts:
                 customer = self.session.query(Customer).filter_by(id=contract.customer_id).first()
-                customer_info = ""
                 if customer:
-                    customer_info = f"{customer.full_name} {customer.email} {customer.phone} {customer.company_name}"
+                    customer_info = f"{customer.full_name}\n{customer.email}\n{customer.phone}\n{customer.company_name}"
+                else:
+                    customer_info = "Customer not found"
                 table.append([contract.id, contract.customer_id, customer_info, contract.sales_contact, contract.total_amount, contract.amount_remaining, contract.creation_date, contract.contract_status])
             print(tabulate(table, headers=headers, tablefmt="pretty"))
         else:
-            print("No contracts found in the database.")      
+            print("No contracts found in the database.")
+     
 
     def display_events(self, events):
         if events:
