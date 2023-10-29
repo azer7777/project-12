@@ -28,7 +28,7 @@ class Customer(Base):
 class Contract(Base):
     __tablename__ = 'contracts'
     id = Column(Integer, primary_key=True)
-    customer_id = Column(Integer, ForeignKey('customers.id'), nullable=True)
+    customer_id = Column(Integer, ForeignKey('customers.id'), nullable=False)
     sales_contact = Column(String, nullable=True)
     total_amount = Column(String, nullable=True)
     amount_remaining = Column(String, nullable=True)
@@ -41,7 +41,7 @@ class Event(Base):
     __tablename__ = 'events'
     id = Column(Integer, primary_key=True) 
     event_name = Column(String, nullable=True)   
-    contract_id = Column(Integer, ForeignKey('contracts.id'), nullable=True)
+    contract_id = Column(Integer, ForeignKey('contracts.id'), nullable=False)
     client_name = Column(String, nullable=True)
     client_contact = Column(String, nullable=True)
     event_start_date = Column(String, nullable=True)
