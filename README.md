@@ -14,8 +14,11 @@ Event Management: Organize events related to contracts. Track event name, start/
 ## Technologies Used
 
 Python: Backend logic and database management.
+
 SQLAlchemy: Object-Relational Mapping (ORM) for working with databases.
+
 SQLite: Lightweight and easy-to-set-up database.
+
 Sentry: Error monitoring and reporting tool.
 
 ## Installation
