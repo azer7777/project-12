@@ -46,6 +46,7 @@ class Menu:
             )
             if choice == "1":
                 self.manage_accounts_menu(role, user_full_name)
+                break
             elif choice == "2":
                 customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status = Entries.get_contract_input()
                 self.manager.create_contract(customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status)
