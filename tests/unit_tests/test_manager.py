@@ -66,7 +66,7 @@ class TestManager(unittest.TestCase):
                     contract_status="Active",
                 )
 
-                mock_print.assert_called_once_with("Customer with ID 1 not found. operation aborted.")
+                mock_print.assert_called_once_with("Customer with ID 1 not found. Operation aborted.")
 
     @patch.object(Session, "query")
     def test_get_all_contracts(self, mock_query):

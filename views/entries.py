@@ -3,6 +3,12 @@ from datetime import datetime
 
 class Entries:
     def get_register_input():
+        """
+        Get user input for user registration.
+
+        Returns:
+            Tuple[str, str, str, str]: A tuple containing full name, username, password, and role.
+        """
         while True:
             try:
                 full_name = input("Enter a full name: ")
@@ -12,14 +18,20 @@ class Entries:
                 if role.lower() not in ["management", "sales", "support"]:
                     raise ValueError("Invalid role. Please enter management, sales, or support.")
                 if len(full_name) < 3 or len(username) < 3:
-                    raise ValueError("username or full name too short !") 
+                    raise ValueError("Username or full name too short!")
                 return full_name, username, password, role.lower()
             except ValueError as e:
                 print(e)
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
-                
+
     def get_user_update_input():
+        """
+        Get user input for updating user information.
+
+        Returns:
+            Tuple[str, str, str]: A tuple containing username, new full name, and new password.
+        """
         while True:
             try:
                 username = input("Enter a username: ")
@@ -28,8 +40,14 @@ class Entries:
                 return username, full_name, password
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
-    
+
     def get_customer_input():
+        """
+        Get user input for customer creation.
+
+        Returns:
+            Tuple[str, str, str, str, str, str]: A tuple containing customer information.
+        """
         while True:
             try:
                 full_name = input("Enter full name: ")
@@ -40,9 +58,15 @@ class Entries:
                 last_contact_date = Entries.check_date_format("Enter last contact date")
                 return full_name, email, phone, company_name, creation_date, last_contact_date
             except Exception as e:
-                print(f"An error occurred: {e}. Please try again.")    
-    
+                print(f"An error occurred: {e}. Please try again.")
+
     def get_customer_update_input():
+        """
+        Get user input for updating customer information.
+
+        Returns:
+            Tuple[int, str, str, str, str, str]: A tuple containing customer ID and new information.
+        """
         while True:
             try:
                 customer_id = int(input("Enter customer ID: "))
@@ -52,13 +76,19 @@ class Entries:
                 new_company_name = input("Enter new company name (or press Enter to skip): ")
                 new_last_contact_date = input("Enter new last contact date (or press Enter to skip): ")
                 return customer_id, new_full_name, new_email, new_phone, new_company_name, new_last_contact_date
-    
+
             except ValueError:
                 print("Invalid input. Please enter a valid integer for customer ID.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
-        
+
     def get_contract_input():
+        """
+        Get user input for contract creation.
+
+        Returns:
+            Tuple[int, str, str, str, str, str]: A tuple containing contract information.
+        """
         while True:
             try:
                 customer_id = int(input("Enter customer ID: "))
@@ -66,34 +96,47 @@ class Entries:
                 total_amount = input("Enter total amount: ")
                 amount_remaining = input("Enter amount remaining: ")
                 creation_date = datetime.now().strftime("%d %m %Y %H:%M")
-                contract_status = input("Enter contract status (if signed , enter 'signed'): ")
+                contract_status = input("Enter contract status (if signed, enter 'signed'): ")
                 return customer_id, sales_contact, total_amount, amount_remaining, creation_date, contract_status
             except ValueError:
-                print(
-                    "Invalid input. Please enter a valid customer ID."
-                )
+                print("Invalid input. Please enter a valid customer ID.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
     def get_contract_update_input(role):
+        """
+        Get user input for updating contract information.
+
+        Args:
+            role (str): The role of the user.
+
+        Returns:
+            Tuple[int, str, str, str, str]: A tuple containing contract ID and new information.
+        """
         while True:
             try:
                 contract_id = int(input("Enter contract ID: "))
                 new_sales_contact = ""
                 if role == "management":
-                    new_sales_contact = input("Enter new sales contact (or press Enter to skip):")                  
+                    new_sales_contact = input("Enter new sales contact (or press Enter to skip):")
                 new_total_amount = input("Enter new total amount (or press Enter to skip):")
                 new_amount_remaining = input("Enter new amount remaining (or press Enter to skip):")
-                new_contract_status = input("Enter contract new status (if signed enter 'signed' or press Enter to skip): ")
+                new_contract_status = input(
+                    "Enter contract new status (if signed enter 'signed' or press Enter to skip): "
+                )
                 return contract_id, new_sales_contact, new_total_amount, new_amount_remaining, new_contract_status
             except ValueError:
-                print(
-                    "Invalid input. Please enter a valid contract ID."
-                )
+                print("Invalid input. Please enter a valid contract ID.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
-                              
+
     def get_event_input():
+        """
+        Get user input for event creation.
+
+        Returns:
+            Tuple[str, int, str, str, str, str, str, str, str, str]: A tuple containing event information.
+        """
         while True:
             try:
                 event_name = input("Enter event name: ")
@@ -106,17 +149,37 @@ class Entries:
                 location = input("Enter location: ")
                 attendees = input("Enter number of attendees: ")
                 notes = input("Enter notes: ")
-                return event_name, contract_id, client_name, client_contact, event_start_date, event_end_date, support_contact, location, attendees, notes
+                return (
+                    event_name,
+                    contract_id,
+                    client_name,
+                    client_contact,
+                    event_start_date,
+                    event_end_date,
+                    support_contact,
+                    location,
+                    attendees,
+                    notes,
+                )
             except ValueError:
                 print("Invalid input. Please enter a valid contract ID.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
     def get_event_update_input(role):
+        """
+        Get user input for updating event information.
+
+        Args:
+            role (str): The role of the user.
+
+        Returns:
+            Tuple[int, str, str, str, str, str, str, str, str, str]: A tuple containing event ID and new information.
+        """
         while True:
             try:
                 event_id = int(input("Enter event ID: "))
-                new_event_name = ""    
+                new_event_name = ""
                 new_client_name = ""
                 new_client_contact = ""
                 new_event_start_date = ""
@@ -124,33 +187,59 @@ class Entries:
                 new_support_contact = ""
                 new_location = ""
                 new_attendees = ""
-                new_notes = "" 
+                new_notes = ""
                 if role == "management":
-                    new_support_contact = input("Enter new support contact (or press Enter to keep current support contact): ")
+                    new_support_contact = input(
+                        "Enter new support contact (or press Enter to keep current support contact): "
+                    )
                 elif role == "support":
-                    new_event_name = input("Enter new event_name (or press Enter to skip): ")    
+                    new_event_name = input("Enter new event_name (or press Enter to skip): ")
                     new_client_name = input("Enter new client name (or press Enter to skip): ")
                     new_client_contact = input("Enter new client contact (or press Enter to skip): ")
-                    new_event_start_date = Entries.check_date_format("Enter new event start date (or press Enter to skip):")
-                    new_event_end_date = Entries.check_date_format("Enter new event end date (or press Enter to skip): ")
+                    new_event_start_date = Entries.check_date_format(
+                        "Enter new event start date (or press Enter to skip):"
+                    )
+                    new_event_end_date = Entries.check_date_format(
+                        "Enter new event end date (or press Enter to skip): "
+                    )
                     new_location = input("Enter new location (or press Enter to skip): ")
                     new_attendees = input("Enter new attendess (or press Enter to skip): ")
-                    new_notes = input("Enter new notes (or press Enter to skip): ")                     
-                return event_id, new_event_name, new_client_name, new_client_contact, new_event_start_date, new_event_end_date, new_support_contact, new_location, new_attendees, new_notes
+                    new_notes = input("Enter new notes (or press Enter to skip): ")
+                return (
+                    event_id,
+                    new_event_name,
+                    new_client_name,
+                    new_client_contact,
+                    new_event_start_date,
+                    new_event_end_date,
+                    new_support_contact,
+                    new_location,
+                    new_attendees,
+                    new_notes,
+                )
             except ValueError:
                 print("Invalid input. Please enter a valid integer for event ID.")
             except Exception as e:
                 print(f"An error occurred: {e}. Please try again.")
 
     def check_date_format(message):
-            date = input(f"{message} (DD/MM/YYYY): ")
-            if date != "":
-                while True:
-                    try:
-                        date == (datetime.strptime(date, "%d/%m/%Y")).date()
-                        break
-                    except ValueError:
-                        print("    Inccorect date format !")
-                        print("    Try again")
-                        date = input(f"{message} (YYYY/MM/DD): ")
-            return date
+        """
+        Validate and return a user-inputted date.
+
+        Args:
+            message (str): The prompt message.
+
+        Returns:
+            str: A formatted date string.
+        """
+        date = input(f"{message} (DD/MM/YYYY): ")
+        if date != "":
+            while True:
+                try:
+                    date = datetime.strptime(date, "%d/%m/%Y").date()
+                    break
+                except ValueError:
+                    print("Incorrect date format!")
+                    print("Try again.")
+                    date = input(f"{message} (DD/MM/YYYY): ")
+        return date
