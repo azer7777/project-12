@@ -1,8 +1,16 @@
 from views.menu import Menu
 import sentry_sdk
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+database_url = os.getenv("DATABASE_URL")
+sentry_dsn = os.getenv("SENTRY_DSN")
 
 sentry_sdk.init(
-    dsn="https://1773bbfa60a2c88c5fcd04844d9360f0@o4506122951262208.ingest.sentry.io/4506122955456512",
+    dsn="SENTRY_DSN",
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     traces_sample_rate=1.0,
