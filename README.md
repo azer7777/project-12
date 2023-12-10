@@ -59,6 +59,10 @@ Generate the coverage report:
 coverage html
 ````
 Access the HTML coverage report in the htmlcov directory.
+3. Linting:
+````
+flake8.
+````
 
 ## Usage
 ````
