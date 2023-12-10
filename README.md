@@ -40,6 +40,25 @@ pip install -r requirements.txt
 ````
 python main.py
 ````
+## Tests and reports
+
+1. Running Tests with pytest:
+````
+pytest
+````
+To generate an HTML report:
+````
+pytest --html=pytest_report.html
+````
+2. Generating Code Coverage Report:
+````
+coverage run -m pytest
+````
+Generate the coverage report:
+````
+coverage html
+````
+Access the HTML coverage report in the htmlcov directory.
 
 ## Usage
 ````
