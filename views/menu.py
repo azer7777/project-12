@@ -41,11 +41,11 @@ class Menu:
             print(f"Menu for {role}, collaborator: {user_full_name}")
             choice = input(
                 """
-                1. Accounts menu              2. Create Contract        3. Update Contract 
+                1. Accounts menu              2. Create Contract        3. Update Contract
                 4. Delete Contract            5. List All Contracts     6. List All Events
                 7. Events Without Support     8. Update Event           9. List All Customers
                 0. Logout
-                
+
                                              Choose an option : """
             )
             if choice == "1":
@@ -134,9 +134,9 @@ class Menu:
             choice = input(
                 """
                 1. Create Customer          2. Update Customer        3. Update Contract
-                4. Create Event             5. List All Contracts     6. List unsigned or not fully paid contracts 
-                7. List All Events          8. List All Customers     0. Logout  
-                
+                4. Create Event             5. List All Contracts     6. List unsigned or not fully paid contracts
+                7. List All Events          8. List All Customers     0. Logout
+
                                              Choose an option : """
             )
             if choice == "1":
@@ -235,8 +235,8 @@ class Menu:
             choice = input(
                 """
                 1. Update Event             2. List All Customers      3. List All Contracts
-                4. List All Events          5. List assigned events    0. Logout  
-                
+                4. List All Events          5. List assigned events    0. Logout
+
                                              Choose an option : """
             )
             if choice == "1":
@@ -291,7 +291,7 @@ class Menu:
                 """
                 1. Register collaborator    2. Update collaborator    3. Delete collaborator
                 4. Management menu
-                
+
                                              Choose an option : """
             )
             if choice == "1":

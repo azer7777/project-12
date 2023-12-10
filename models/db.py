@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
-import os
+
 
 Base = declarative_base()
 
@@ -116,6 +116,6 @@ class Event(Base):
 
 
 # Create an SQLite database in memory
-engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine("sqlite:///crm.db")
 # Create the tables in the database
 Base.metadata.create_all(engine)
