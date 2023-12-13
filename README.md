@@ -67,7 +67,7 @@ flake8.
 
 ## Usage
 ````
-username : user1
+username : user0
 password: user
 ````
 Access the application through the command line interface using the credentials provided.
