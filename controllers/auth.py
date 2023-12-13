@@ -1,5 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 from models.db import engine, User
+import bcrypt
 
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -21,7 +22,11 @@ def register_user(full_name, username, password, role):
     existing_user = session.query(User).filter_by(username=username).first()
     if existing_user:
         return "Username already exists. Please choose another username."
-    new_user = User(full_name=full_name, username=username, password=password, role=role)
+
+    # Hash the password before storing it
+    hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+    new_user = User(full_name=full_name, username=username, password=hashed_password, role=role)
     session.add(new_user)
     session.commit()
     return "User registered successfully. The new user can now log in with the credentials."
@@ -42,7 +47,12 @@ def update_user(username, new_full_name, new_password):
     user = session.query(User).filter_by(username=username).first()
     if user:
         user.full_name = new_full_name
-        user.password = new_password
+
+        # Hash the new password before updating it
+        if new_password:
+            hashed_password = bcrypt.hashpw(new_password.encode("utf-8"), bcrypt.gensalt())
+            user.password = hashed_password
+
         session.commit()
         return "User updated successfully."
     return "User not found."
@@ -78,8 +88,8 @@ def authenticate(username, password):
     Returns:
         Tuple[str, str]: A tuple containing the full name and role of the authenticated user.
     """
-    user = session.query(User).filter_by(username=username, password=password).first()
-    if user:
+    user = session.query(User).filter_by(username=username).first()
+    if user and bcrypt.checkpw(password.encode("utf-8"), user.password):
         return user.full_name, user.role
     return None, None
 
